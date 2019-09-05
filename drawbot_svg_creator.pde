@@ -329,8 +329,8 @@ void keyPressed() {
   if (key == 't') { set_even_distribution(); }
   if (key == 'y') { set_black_distribution(); }
   if (key == 'x') { mouse_point(); }  
-  if (key == '}' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
-  if (key == '{' && current_copic_set >= 1)                   { current_copic_set--; }
+  if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
+  if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
   if (key == 's') { if (state == 3) { state++; } }
   if (keyCode == 65 && ctrl_down)  {
@@ -370,13 +370,13 @@ void keyPressed() {
   }
 
   if (key == '\\') { screen_scale = screen_scale_org; screen_rotate=0; mx=0; my=0; }
-  if (key == '<') {
+  if (key == ',') {
     int delta = -10000;
     display_line_count = int(display_line_count + delta);
     display_line_count = constrain(display_line_count, 0, d1.line_count);
     //println("display_line_count: " + display_line_count);
   }
-  if (key == '>') {
+  if (key == '.') {
     int delta = 10000;
     display_line_count = int(display_line_count + delta);
     display_line_count = constrain(display_line_count, 0, d1.line_count);
