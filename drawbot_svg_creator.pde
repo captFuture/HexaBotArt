@@ -1,11 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// My Drawbot, "Death to Sharpie"
-// Jpeg to gcode simplified (kinda sorta works version, v3.75 (beta))
+// Fork Based on Drawbot, "Death to Sharpie" from https://github.com/Scott-Cooper/Drawbot_image_to_gcode_v2
+// and https://github.com/jwcliff/Drawbot_image_to_gcode_v2
 //
-// Scott Cooper, Dullbits.com, <scottslongemailaddress@gmail.com>
+// Chris Tarantl, tarantl.com, <profsimon@gmail.com>
 //
 // Open creative GPL source commons with some BSD public GNU foundation stuff sprinkled in...
-// If anything here is remotely useable, please give me a shout.
+//
 //
 // Useful math:    http://members.chello.at/~easyfilter/bresenham.html
 // GClip:          https://forum.processing.org/two/discussion/6179/why-does-not-it-run-clipboard
@@ -16,17 +16,19 @@ import processing.pdf.*;
 
 
 // Constants 
-final float   paper_size_x = 32 * 25.4;
-final float   paper_size_y = 40 * 25.4;
-final float   image_size_x = 28 * 25.4;
-final float   image_size_y = 36 * 25.4;
-final float   paper_top_to_origin = 285;      //mm, make smaller to move drawing down on paper
+final float   paper_size_x = 18 * 25.4; //480mm
+final float   paper_size_y = 24 * 25.4; //600mm
+final float   image_size_x = 18 * 25.4; 
+final float   image_size_y = 24 * 25.4;
+final float   paper_top_to_origin = 200;  //mm
 final float   pen_width = 0.65;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 final int     pen_count = 6;
+int     current_copic_set = 11;
+
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
 final int     svg_decimals = 2;               // Number of digits right of the decimal point in the SVG file.
-final float   grid_scale = 25.4;              // Use 10.0 for centimeters, 25.4 for inches, and between 444 and 529.2 for cubits.
+final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 for inches, and between 444 and 529.2 for cubits.
 
 
 // Every good program should have a shit pile of badly named globals.
@@ -37,7 +39,7 @@ String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"};
 
 int     state = 1;
 int     pen_selected = 0;
-int     current_copic_set = 0;
+
 int     display_line_count;
 String  display_mode = "drawing";
 PImage  img_orginal;               // The original image
@@ -57,7 +59,7 @@ int     morgx = 0;
 int     morgy = 0;
 int     pen_color = 0;
 boolean is_pen_down;
-boolean is_grid_on = false;
+boolean is_grid_on = true;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
@@ -97,10 +99,11 @@ String[][] copic_sets = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1415, 900, P3D);
+  //size(int(paper_size_x), int(paper_size_y), P3D);
+  size(400,600, P3D);
   frame.setLocation(200, 200);
-  surface.setResizable(true);
-  surface.setTitle("Drawbot_image_to_gcode_v2, version 3.75");
+  //surface.setResizable(true);
+  surface.setTitle("Drawbot - SVG creator");
   colorMode(RGB);
   frameRate(999);
   //randomSeed(millis());
@@ -358,11 +361,12 @@ void keyPressed() {
     if (pen_count > 9) { pen_distribution[9] *= 0.55; }
 }
   if (key == 'g') { 
-    create_gcode_files(display_line_count);
-    create_gcode_test_file ();
+    //create_gcode_files(display_line_count);
+    //create_gcode_test_file ();
     create_svg_file(display_line_count);
-    d1.render_to_pdf(display_line_count);
-    d1.render_each_pen_to_pdf(display_line_count);
+    create_svg_files(display_line_count);
+    //d1.render_to_pdf(display_line_count);
+    //d1.render_each_pen_to_pdf(display_line_count);
   }
 
   if (key == '\\') { screen_scale = screen_scale_org; screen_rotate=0; mx=0; my=0; }

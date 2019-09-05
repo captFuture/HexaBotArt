@@ -1,4 +1,4 @@
-# Drawbot_image_to_gcode_v2
+# drawbot_svg_creator
 <img src="pics/github1.png" height="411" alt="Drawbot_image_to_gcode_v2 example output"/>
 
 This code is used to generate gcode for drawbots, polargraphs or other vertical drawing machines. \
