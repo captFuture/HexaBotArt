@@ -153,8 +153,8 @@ class PFM_squares implements pfm {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   public void output_parameters() {
-    gcode_comment("adjustbrightness: " + adjustbrightness);
-    gcode_comment("squiggle_length: " + squiggle_length);
+    code_comment("adjustbrightness: " + adjustbrightness);
+    code_comment("squiggle_length: " + squiggle_length);
   }
 
 }

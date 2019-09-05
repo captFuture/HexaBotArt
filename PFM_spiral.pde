@@ -109,8 +109,8 @@ class PFM_spiral implements pfm {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   public void output_parameters() {
-    //gcode_comment("dist: " + dist);
-    //gcode_comment("ampScale: " + ampScale);     
+    //code_comment("dist: " + dist);
+    //code_comment("ampScale: " + ampScale);     
   }
 
 }

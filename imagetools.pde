@@ -1,62 +1,57 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_threshold() {
-  gcode_comment("Thresholed");
+  code_comment("Thresholed");
   img.filter(THRESHOLD);
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_desaturate() {
-  gcode_comment("image_desaturate");
+  code_comment("image_desaturate");
   img.filter(GRAY);
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_invert() {
-  gcode_comment("image_invert");
+  code_comment("image_invert");
   img.filter(INVERT);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_posterize(int amount) {
-  gcode_comment("image_posterize");
+  code_comment("image_posterize");
   img.filter(POSTERIZE, amount);
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_blur(int amount) {
-  gcode_comment("image_blur");
+  code_comment("image_blur");
   img.filter(BLUR, amount);
 }
  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_erode() {
-  gcode_comment("image_erode");
+  code_comment("image_erode");
   img.filter(ERODE);
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_dilate() {
-  gcode_comment("image_dilate");
+  code_comment("image_dilate");
   img.filter(DILATE);
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void save_jpg() {
   // Currently disabled.
-  // Must not be called from event handling functions such as keyPressed()
-  PImage  img_drawing;
+  /*PImage  img_drawing;
   PImage  img_drawing2;
-
-  //img_drawing = createImage(img.width, img.height, RGB);
-  //img_drawing.copy(0, 0, img.width, img.height, 0, 0, img.width, img.height);
-  //img_drawing.save("what the duce.jpg");
 
   // Save resuling image
   save("tmptif.tif");
   img_drawing = loadImage("tmptif.tif");
   img_drawing2 = createImage(img.width, img.height, RGB);
   img_drawing2.copy(img_drawing, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
-  img_drawing2.save("gcode\\gcode_" + basefile_selected + ".jpg");
+  img_drawing2.save(sketchPath("") + "drawings\\" + basefile_selected + ".jpg");*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,9 +73,9 @@ void image_rotate() {
     }
     img = img2;
     updatePixels();
-    gcode_comment("image_rotate: rotated 90 degrees to fit machines sweet spot");
+    code_comment("image_rotate: rotated 90 degrees to fit machines sweet spot");
   } else {
-    gcode_comment("image_rotate: no rotation necessary");
+    code_comment("image_rotate: no rotation necessary");
   }
 }
 
@@ -98,9 +93,9 @@ void lighten_one_pixel(int adjustbrightness, int x, int y) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_scale(int new_width) {
   if (img.width != new_width) {
-    gcode_comment("image_scale, old size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
+    code_comment("image_scale, old size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
     img.resize(new_width, 0);
-    gcode_comment("image_scale, new size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
+    code_comment("image_scale, new size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
   }
 }
 
@@ -123,8 +118,8 @@ void image_crop() {
   float desired_ratio = image_size_x / image_size_y;
   float current_ratio = (float)img.width / (float)img.height;
   
-  gcode_comment("image_crop desired ratio of " + desired_ratio);
-  gcode_comment("image_crop old size: " + img.width + " by " + img.height + "     ratio: " + current_ratio);
+  code_comment("image_crop desired ratio of " + desired_ratio);
+  code_comment("image_crop old size: " + img.width + " by " + img.height + "     ratio: " + current_ratio);
   
   if (current_ratio < desired_ratio) {
     int desired_x = img.width;
@@ -141,7 +136,7 @@ void image_crop() {
   }
 
   img = img2;
-  gcode_comment("image_crop new size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
+  code_comment("image_crop new size: " + img.width + " by " + img.height + "     ratio: " + (float)img.width / (float)img.height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +161,7 @@ void image_boarder(String fname, int shrink, int blur) {
   
   //boarder.copy(temp_boarder, 0, 0, temp_boarder.width, temp_boarder.height, 0, 0, boarder.width, boarder.height);
   img.blend(temp_boarder, shrink, shrink, img.width, img.height,  0, 0, img.width, img.height, ADD); 
-  gcode_comment("image_boarder: " + fname + "   " + shrink + "   " + blur);
+  code_comment("image_boarder: " + fname + "   " + shrink + "   " + blur);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +182,7 @@ void image_unsharpen(PImage img, int amount) {
   //print_matrix(matrix);
 
   image_convolution(img, matrix, 1.0, 0.0);
-  gcode_comment("image_unsharpen: " + amount);
+  code_comment("image_unsharpen: " + amount);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

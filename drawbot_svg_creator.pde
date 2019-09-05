@@ -7,9 +7,6 @@
 // Open creative GPL source commons with some BSD public GNU foundation stuff sprinkled in...
 //
 //
-// Useful math:    http://members.chello.at/~easyfilter/bresenham.html
-// GClip:          https://forum.processing.org/two/discussion/6179/why-does-not-it-run-clipboard
-// Dynamic class:  https://processing.org/discourse/beta/num_1262759715.html
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 import processing.pdf.*;
@@ -63,7 +60,7 @@ boolean is_grid_on = true;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
-String  gcode_comments = "";
+String  code_comments = "";
 int     startTime = 0;
 boolean ctrl_down = false;
 
@@ -163,8 +160,8 @@ void draw() {
     println("elapsed time: " + (millis() - startTime) / 1000.0 + " seconds");
     display_line_count = d1.line_count;
   
-    gcode_comment ("extreams of X: " + dx.min + " thru " + dx.max);
-    gcode_comment ("extreams of Y: " + dy.min + " thru " + dy.max);
+    code_comment ("extreams of X: " + dx.min + " thru " + dx.max);
+    code_comment ("extreams of Y: " + dy.min + " thru " + dy.max);
     state++;
     break;
   case 5: 
@@ -206,7 +203,7 @@ void setup_squiggles() {
   d1.line_count = 0;
   //randomSeed(millis());
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
-  gcode_comment("loaded image: " + path_selected);
+  code_comment("loaded image: " + path_selected);
 
   image_rotate();
 
@@ -229,16 +226,16 @@ void setup_squiggles() {
   screen_scale = min(screen_scale_x, screen_scale_y);
   screen_scale_org = screen_scale;
   
-  gcode_comment("final dimensions: " + img.width + " by " + img.height);
-  gcode_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
-  gcode_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
-  gcode_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2) + "      " + nf(img.width * gcode_scale/25.4,0,2) + " by " + nf(img.height * gcode_scale/25.4,0,2));
-  gcode_comment("gcode_scale X:  " + nf(gcode_scale_x,0,2));
-  gcode_comment("gcode_scale Y:  " + nf(gcode_scale_y,0,2));
-  gcode_comment("gcode_scale:    " + nf(gcode_scale,0,2));
-  //gcode_comment("screen_scale X: " + nf(screen_scale_x,0,2));
-  //gcode_comment("screen_scale Y: " + nf(screen_scale_y,0,2));
-  //gcode_comment("screen_scale:   " + nf(screen_scale,0,2));
+  code_comment("final dimensions: " + img.width + " by " + img.height);
+  code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
+  code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
+  code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2) + "      " + nf(img.width * gcode_scale/25.4,0,2) + " by " + nf(img.height * gcode_scale/25.4,0,2));
+  code_comment("gcode_scale X:  " + nf(gcode_scale_x,0,2));
+  code_comment("gcode_scale Y:  " + nf(gcode_scale_y,0,2));
+  code_comment("gcode_scale:    " + nf(gcode_scale,0,2));
+  //code_comment("screen_scale X: " + nf(screen_scale_x,0,2));
+  //code_comment("screen_scale Y: " + nf(screen_scale_y,0,2));
+  //code_comment("screen_scale:   " + nf(screen_scale,0,2));
   ocl.output_parameters();
 
   state++;
@@ -361,12 +358,10 @@ void keyPressed() {
     if (pen_count > 9) { pen_distribution[9] *= 0.55; }
 }
   if (key == 'g') { 
-    //create_gcode_files(display_line_count);
-    //create_gcode_test_file ();
+    d1.render_to_pdf(display_line_count);
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
-    //d1.render_to_pdf(display_line_count);
-    //d1.render_each_pen_to_pdf(display_line_count);
+    save_jpg();
   }
 
   if (key == '\\') { screen_scale = screen_scale_org; screen_rotate=0; mx=0; my=0; }

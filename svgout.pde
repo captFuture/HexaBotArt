@@ -1,12 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// No, it's not a fancy dancy class like the snot nosed kids are doing these days.
-// Now get the hell off my lawn.
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-void gcode_comment(String comment) {
-  gcode_comments += ("(" + comment + ")") + "\n";
+void code_comment(String comment) {
+  code_comments += ("(" + comment + ")") + "\n";
   println(comment);
 }
 
@@ -45,11 +39,8 @@ String svg_format (Float n) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// Thanks to John Cliff for getting the SVG output moving forward.
 void create_svg_file (int line_count) {
   boolean drawing_polyline = false;
-  
-  // Inkscape versions before 0.91 used 90dpi, Today most software assumes 96dpi.
   float svgdpi = 96.0 / 25.4;
   
   String gname = "svg\\complete_" + basefile_selected + ".svg";
@@ -124,7 +115,7 @@ void create_svg_files (int line_count) {
     lines_drawn = 0;
     x = 0;
     y = 0;
-    String gname = "svg\\svg_" + basefile_selected + "_pen" + p + "_" + copic_sets[current_copic_set][p] + ".svg";
+    String gname = "svg\\" + basefile_selected + "\\" + basefile_selected + "_pen" + p + "_" + copic_sets[current_copic_set][p] + ".svg";
     OUTPUT = createWriter(sketchPath("") + gname);
 
   String buf ="<svg xmlns=\"http://www.w3.org/2000/svg\">";
