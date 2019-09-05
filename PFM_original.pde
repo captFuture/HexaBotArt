@@ -39,8 +39,8 @@ class PFM_original implements pfm {
     //image_dilate();
     //image_invert();
     //image_blur(2);
-    image_boarder("b1.png", 0, 0);
-    image_boarder("b11.png", 0, 0);
+    //image_boarder("b1.png", 0, 0);
+    //image_boarder("b11.png", 0, 0);
     image_desaturate();
   }
   
@@ -133,9 +133,9 @@ class PFM_original implements pfm {
     //start_angle = 34 + degrees( ( sin(radians(start_x/9+46)) + cos(radians(start_y/-7+26)) ));
     //if (squiggle_count <220) { tests = 20; } else { tests = 2; }
     //start_angle = random(20, 1);       // Cuba 1
-    start_angle = random(-72, -52);    // Spitfire
+    //start_angle = random(-72, -52);    // Spitfire
     //start_angle = random(-120, -140);  // skier
-    //start_angle = random(-360, -1);    // gradiant magic
+    start_angle = random(-360, -1);    // gradiant magic
     //start_angle = squiggle_count % 360;
     //start_angle += squiggle_count/4;
     //start_angle = -45;

@@ -6,21 +6,20 @@
 //
 // Open creative GPL source commons with some BSD public GNU foundation stuff sprinkled in...
 //
-//
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 import processing.pdf.*;
 
-
-// Constants 
-final float   paper_size_x = 18 * 25.4; //480mm
-final float   paper_size_y = 24 * 25.4; //600mm
-final float   image_size_x = 18 * 25.4; 
-final float   image_size_y = 24 * 25.4;
+// Constants
+final float   paper_scale = 2;
+final float   paper_size_x = 18 * 25.4 * paper_scale; //480mm
+final float   paper_size_y = 24 * 25.4 * paper_scale; //600mm
+final float   image_size_x = 18 * 25.4 * paper_scale; 
+final float   image_size_y = 24 * 25.4 * paper_scale;
 final float   paper_top_to_origin = 200;  //mm
 final float   pen_width = 0.65;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 final int     pen_count = 6;
-int     current_copic_set = 11;
+int     current_copic_set = 18;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -86,10 +85,13 @@ String[][] copic_sets = {
   {"100", "100", "R59", "N6", "N4", "N2"},      // Dark Grey Red
   {"100", "100", "G29", "N6", "N4", "N2"},      // Dark Grey Violet
   {"100", "100", "YR09", "N6", "N4", "N2"},     // Dark Grey Orange
-  {"100", "100", "B39", "G28", "B26", "G14"},   // Blue Green
+  {"100", "100", "B39", "G28", "B26", "G14"},   // Blue Green::
   {"100", "100", "B39", "V09", "B02", "V04"},   // Purples
   {"100", "100", "R29", "R27", "R24", "R20"},   // Reds
-  {"100", "E29", "YG99", "Y17", "YG03", "Y11"} // Yellow, green
+  {"100", "E29", "YG99", "Y17", "YG03", "Y11"}, // Yellow, green
+  {"E18", "E15", "E13", "E11", "R20", "E00"}, // Skin Tones
+  {"100", "N3", "G21", "BG72", "B93", "N1"}, //   Sea
+  {"R37", "YR04", "Y15", "G07", "B29", "BV08"} // Primary
 };
 
 
@@ -97,7 +99,7 @@ String[][] copic_sets = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
   //size(int(paper_size_x), int(paper_size_y), P3D);
-  size(400,600, P3D);
+  size(1200,800, P3D);
   frame.setLocation(200, 200);
   //surface.setResizable(true);
   surface.setTitle("Drawbot - SVG creator");

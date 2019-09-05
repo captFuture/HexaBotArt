@@ -117,7 +117,7 @@ void create_svg_file (int line_count) {
   x = 0;
   y = 0;
   
-  String gname = "svg\\complete_" + basefile_selected + ".svg";
+  String gname = "svg\\complete_"+ pfms[current_pfm] +"_" + current_copic_set + "_" + basefile_selected + ".svg";
   OUTPUT = createWriter(sketchPath("") + gname);
   
   String buf ="<svg xmlns=\"http://www.w3.org/2000/svg\">";
@@ -128,6 +128,7 @@ void create_svg_file (int line_count) {
   // Loop over pens backwards to display dark lines last.
   // Then loop over all displayed lines.
   for (int p=pen_count-1; p>=0; p--) {    
+  //for (int p=0; p<pen_count-1; p++) {  
 	OUTPUT.println("<!-- Code for Pen " + copic_sets[current_copic_set][p] + " -->");
   
 	
@@ -218,10 +219,10 @@ void create_svg_files (int line_count) {
     lines_drawn = 0;
     x = 0;
     y = 0;
-    String gname = "svg\\" + basefile_selected + "\\" + basefile_selected + "_pen" + p + "_" + copic_sets[current_copic_set][p] + ".svg";
+    String gname = "svg\\" + basefile_selected + "\\" + pfms[current_pfm] + "\\" + current_copic_set + "\\" + basefile_selected + "_pen" + p + "_" + copic_sets[current_copic_set][p] + ".svg";
     OUTPUT = createWriter(sketchPath("") + gname);
 
-	String buf ="<svg xmlns=\"http://www.w3.org/2000/svg\">";
+	  String buf ="<svg xmlns=\"http://www.w3.org/2000/svg\">";
     OUTPUT.println(buf);
     
     for(int i=1; i<line_count; i++) { 

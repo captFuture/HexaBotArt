@@ -449,6 +449,7 @@ class Copix {
     original_color.put("B39", color(#2b64a9));  original_name.put("B39", "Prussian Blue");
     original_color.put("B41", color(#e2f0fb));  original_name.put("B41", "Powder Blue");
     original_color.put("B45", color(#75c0ea));  original_name.put("B45", "Smoky Blue");
+    original_color.put("B93", color(#95c1da));  sketch_name.put("B93", "Light Crockery Blue");
     original_color.put("BG02", color(#c6e8ea));  original_name.put("BG02", "New Blue");
     original_color.put("BG05", color(#83d2e1));  original_name.put("BG05", "Holiday Blue");
     original_color.put("BG09", color(#01b1c9));  original_name.put("BG09", "Blue Green");
@@ -461,6 +462,7 @@ class Copix {
     original_color.put("BG34", color(#a3dad7));  original_name.put("BG34", "Horizon Green");
     original_color.put("BG45", color(#afdfdf));  original_name.put("BG45", "Nile Blue");
     original_color.put("BG49", color(#00b6b9));  original_name.put("BG49", "Duck Blue");
+    original_color.put("BG72", color(#74b8bb));  sketch_name.put("BG72", "Ice Ocean");
     original_color.put("BG99", color(#6e9b87));  original_name.put("BG99", "Flagstone Blue");
     original_color.put("BV00", color(#e0dced));  original_name.put("BV00", "Mauve Shadow");
     original_color.put("BV04", color(#7c97ce));  original_name.put("BV04", "Blue Berry");
@@ -486,6 +488,7 @@ class Copix {
     original_color.put("E11", color(#fee9d6));  original_name.put("E11", "Barley Beige");
     original_color.put("E13", color(#e9c5af));  original_name.put("E13", "Light Suntan");
     original_color.put("E15", color(#fbbb8d));  original_name.put("E15", "Dark Suntan");
+    original_color.put("E18", color(#88534d));  sketch_name.put("E18", "Copper");
     original_color.put("E19", color(#c45238));  original_name.put("E19", "Redwood");
     original_color.put("E21", color(#fde2c7));  original_name.put("E21", "Soft Sun");
     original_color.put("E25", color(#d2a482));  original_name.put("E25", "Caribe Cocoa");
