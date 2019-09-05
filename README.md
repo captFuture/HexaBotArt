@@ -1,5 +1,5 @@
 # drawbot_svg_creator
-<img src="pics/github1.png" height="411" alt="Drawbot_image_to_gcode_v2 example output"/>
+<img src="pics/github1.png" height="411" alt="example output"/>
 
 This code is used to generate gcode for drawbots, polargraphs or other vertical drawing machines. \
 It takes an original image, manipulates it and generates a drawing path that kinda sorta looks like the original image. \
@@ -21,16 +21,16 @@ If your clipboard contains a URL to a web site, the code will crash and burn in 
 | o | Display image to be drawn after pre-processing (lower case letter) |
 | l | Display image after the path finding module has manipulated it |
 | d | Display drawing with all pens |
-| <ctrl> 1 | Display drawing, pen 0 only |
-| <ctrl> 2 | Display drawing, pen 1 only |
-| <ctrl> 3 | Display drawing, pen 2 only |
-| <ctrl> 4 | Display drawing, pen 3 only |
-| <ctrl> 5 | Display drawing, pen 4 only |
-| <ctrl> 6 | Display drawing, pen 5 only |
-| <ctrl> 7 | Display drawing, pen 6 only |
-| <ctrl> 8 | Display drawing, pen 7 only |
-| <ctrl> 9 | Display drawing, pen 8 only |
-| <ctrl> 0 | Display drawing, pen 9 only |
+| \<ctrl>\ 1 | Display drawing, pen 0 only |
+| \<ctrl>\ 2 | Display drawing, pen 1 only |
+| \<ctrl>\ 3 | Display drawing, pen 2 only |
+| \<ctrl>\ 4 | Display drawing, pen 3 only |
+| \<ctrl>\ 5 | Display drawing, pen 4 only |
+| \<ctrl>\ 6 | Display drawing, pen 5 only |
+| \<ctrl>\ 7 | Display drawing, pen 6 only |
+| \<ctrl>\ 8 | Display drawing, pen 7 only |
+| \<ctrl>\ 9 | Display drawing, pen 8 only |
+| \<ctrl>\ 0 | Display drawing, pen 9 only |
 | S | Stop path finding prematurely |
 | Esc | Exit running program |
 | < | Decrease the total number of lines drawn |
