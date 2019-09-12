@@ -10,15 +10,30 @@
 import java.util.Map;
 import processing.pdf.*;
 
+ChildApplet child;
+PImage keyimg;
+PFont f;
+boolean mousePressedOnParent = false;
+
 // Constants
-final float   paper_scale = 2;
+/*final float   paper_scale = 2;
+final float   image_scale = 3;
 final float   paper_size_x = 18 * 25.4 * paper_scale; //480mm
 final float   paper_size_y = 24 * 25.4 * paper_scale; //600mm
-final float   image_size_x = 18 * 25.4 * paper_scale; 
-final float   image_size_y = 24 * 25.4 * paper_scale;
-final float   paper_top_to_origin = 200;  //mm
-final float   pen_width = 0.65;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 6;
+final float   image_size_x = 18 * 25.4 * image_scale; 
+final float   image_size_y = 24 * 25.4 * image_scale;
+*/
+
+final float   paper_scale = 1;
+final float   image_scale = 1;
+final float   paper_size_x = 1024 * paper_scale;
+final float   paper_size_y = 768 * paper_scale;
+final float   image_size_x = 1024 * image_scale; // desired image size
+final float   image_size_y = 768 * image_scale; // desired image size
+
+final float   paper_top_to_origin = 0;  //mm
+final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
+final int     pen_count = 3;
 int     current_copic_set = 18;
 
 final char    gcode_decimal_seperator = '.';    
@@ -94,24 +109,32 @@ String[][] copic_sets = {
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"} // Primary
 };
 
+void settings(){
+  size(1024,1024, P3D);
+  smooth();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-  //size(int(paper_size_x), int(paper_size_y), P3D);
-  size(1200,800, P3D);
-  frame.setLocation(200, 200);
-  //surface.setResizable(true);
+  //printArray(PFont.list());
+  f = createFont("arial.ttf", 12);
+  textFont(f);
+    
   surface.setTitle("Drawbot - SVG creator");
   colorMode(RGB);
   frameRate(999);
-  //randomSeed(millis());
+
+  child = new ChildApplet();
+
   randomSeed(3);
   d1 = new botDrawing();
   dx = new Limit(); 
   dy = new Limit(); 
   copic = new Copix();
   loadInClass(pfms[current_pfm]);
+
+  keyimg = loadImage("data/keybindings.jpg");
 
   // If the clipboard contains a URL, try to download the picture instead of using local storage.
   String url = GClip.paste();
@@ -207,7 +230,7 @@ void setup_squiggles() {
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
   code_comment("loaded image: " + path_selected);
 
-  image_rotate();
+  //image_rotate();
 
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);

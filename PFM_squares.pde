@@ -5,11 +5,11 @@
 class PFM_squares implements pfm {
 
   final int    squiggle_length = 1000;      // How often to lift the pen
-  final int    adjustbrightness = 9;        // How fast it moves from dark to light, over-draw
+  final int    adjustbrightness = 10;        // How fast it moves from dark to light, over-draw
   final float  desired_brightness = 250;    // How long to process.  You can always stop early with "s" key
  
-  int          tests = 4;                  // Reasonable values:  13 for development, 720 for final
-  int          line_length = 30;           // Reasonable values:  3 through 100
+  int          tests = 500;                  // Reasonable values:  13 for development, 720 for final
+  int          line_length = int(random(3, 40));           // Reasonable values:  3 through 100
  
   int          squiggle_count;
   int          darkest_x;
