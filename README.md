@@ -1,7 +1,6 @@
-# drawbot_svg_creator
-<img src="pics/github1.png" height="411" alt="example output"/>
+# HexaDrawBotArt
 
-This code is used to generate gcode for drawbots, polargraphs or other vertical drawing machines. \
+This code is used to generate svg files for drawbots, polargraphs or other vertical drawing machines. \
 It takes an original image, manipulates it and generates a drawing path that kinda sorta looks like the original image. \
 This code was specifically written to work with multiple Copic markers. \
 The code was intended to be heavily modified to generate different and unique drawing styles.
@@ -66,4 +65,3 @@ If your clipboard contains a URL to a web site, the code will crash and burn in 
 | ; | Change Copic marker sets, decrement |
 
 
-Examples of drawings made with this software:  http://dullbits.com/drawbot/gallery

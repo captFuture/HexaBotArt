@@ -119,6 +119,7 @@ void settings(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  keyimg = loadImage("data/keybindings.jpg");
   //printArray(PFont.list());
   f = createFont("arial.ttf", 12);
   textFont(f);
@@ -136,7 +137,7 @@ void setup() {
   copic = new Copix();
   loadInClass(pfms[current_pfm]);
 
-  keyimg = loadImage("data/keybindings.jpg");
+  
 
   // If the clipboard contains a URL, try to download the picture instead of using local storage.
   String url = GClip.paste();
