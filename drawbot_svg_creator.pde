@@ -16,24 +16,26 @@ PFont f;
 boolean mousePressedOnParent = false;
 
 // Constants
-/*final float   paper_scale = 2;
-final float   image_scale = 3;
-final float   paper_size_x = 18 * 25.4 * paper_scale; //480mm
-final float   paper_size_y = 24 * 25.4 * paper_scale; //600mm
-final float   image_size_x = 18 * 25.4 * image_scale; 
-final float   image_size_y = 24 * 25.4 * image_scale;
-*/
 
+final float   paper_scale = 1;
+final float   image_scale = 1;
+final float   paper_size_y = 1024 * paper_scale;
+final float   paper_size_x = 768 * paper_scale;
+final float   image_size_y = 1024 * image_scale; // desired image size
+final float   image_size_x = 768 * image_scale; // desired image size
+
+/*
 final float   paper_scale = 1;
 final float   image_scale = 1;
 final float   paper_size_x = 1024 * paper_scale;
 final float   paper_size_y = 768 * paper_scale;
 final float   image_size_x = 1024 * image_scale; // desired image size
 final float   image_size_y = 768 * image_scale; // desired image size
+*/
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 3;
+final int     pen_count = 6;
 int     current_copic_set = 18;
 
 final char    gcode_decimal_seperator = '.';    
