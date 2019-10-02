@@ -31,10 +31,10 @@ The code was intended to be heavily modified to generate different and unique dr
 | Esc | Exit running program |
 | , | Decrease the total number of lines drawn |
 | . | Increase the total number of lines drawn |
-| g | Generate all gcode, SVGs, and PDFs with lines as displayed |
+| g | Generate all SVGs with lines as displayed |
 | G | Toggle grid |
 | t | Redistribute percentage of lines drawn by each pen evenly |
-| y | Redistribute 100% of lines drawn to pen 0 ( Black/White/Sharpie ) |
+| y | Redistribute 100% of lines drawn to pen 0 |
 | 9 | Change distribution of lines drawn (lighten) |
 | 0 | Change distribution of lines drawn (darken) |
 | 1 | Increase percentage of lines drawn by pen 0 |

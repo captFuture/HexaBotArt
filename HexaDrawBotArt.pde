@@ -35,7 +35,7 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 6;
+final int     pen_count = 3;
 int     current_copic_set = 17;
 
 final char    gcode_decimal_seperator = '.';    
