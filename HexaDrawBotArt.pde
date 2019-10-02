@@ -21,7 +21,7 @@ final float   paper_scale = 1;
 final float   image_scale = 1;
 final float   paper_size_y = 1024 * paper_scale;
 final float   paper_size_x = 768 * paper_scale;
-final float   image_size_y = 1024 * image_scale; // desired image size
+final float   image_size_y = 1024 * image_scale; // desired image size...9999
 final float   image_size_x = 768 * image_scale; // desired image size
 
 /*
@@ -36,7 +36,7 @@ final float   image_size_y = 768 * image_scale; // desired image size
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 final int     pen_count = 6;
-int     current_copic_set = 18;
+int     current_copic_set = 17;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -88,27 +88,28 @@ botDrawing d1;
 float[] pen_distribution = new float[pen_count];
 
 String[][] copic_sets = {
-  {"100", "N10", "N8", "N6", "N4", "N2"},       // Dark Greys
-  {"100", "100", "N7", "N5", "N3", "N2"},       // Light Greys
-  {"100", "W10", "W8", "W6", "W4", "W2"},       // Warm Greys
-  {"100", "C10", "C8", "C6", "C4", "C2"},       // Cool Greys
-  {"100", "100", "C7", "W5", "C3", "W2"},       // Mixed Greys
-  {"100", "100", "W7", "C5", "W3", "C2"},       // Mixed Greys
-  {"100", "100", "E49", "E27", "E13", "E00"},   // Browns
-  {"100", "100", "E49", "E27", "E13", "N2"},    // Dark Grey Browns
-  {"100", "100", "E49", "E27", "N4", "N2"},     // Browns
-  {"100", "100", "E49", "N6", "N4", "N2"},      // Dark Grey Browns
-  {"100", "100", "B37", "N6", "N4", "N2"},      // Dark Grey Blues
-  {"100", "100", "R59", "N6", "N4", "N2"},      // Dark Grey Red
-  {"100", "100", "G29", "N6", "N4", "N2"},      // Dark Grey Violet
-  {"100", "100", "YR09", "N6", "N4", "N2"},     // Dark Grey Orange
-  {"100", "100", "B39", "G28", "B26", "G14"},   // Blue Green::
-  {"100", "100", "B39", "V09", "B02", "V04"},   // Purples
-  {"100", "100", "R29", "R27", "R24", "R20"},   // Reds
-  {"100", "E29", "YG99", "Y17", "YG03", "Y11"}, // Yellow, green
-  {"E18", "E15", "E13", "E11", "R20", "E00"}, // Skin Tones
-  {"100", "N3", "G21", "BG72", "B93", "N1"}, //   Sea
-  {"R37", "YR04", "Y15", "G07", "B29", "BV08"} // Primary
+  {"100", "N10", "N8", "N6", "N4", "N2"},       // 0 Dark Greys
+  {"100", "100", "N7", "N5", "N3", "N2"},       // 1 Light Greys
+  {"100", "W10", "W8", "W6", "W4", "W2"},       // 2 Warm Greys
+  {"100", "C10", "C8", "C6", "C4", "C2"},       // 3 Cool Greys
+  {"100", "100", "C7", "W5", "C3", "W2"},       // 4 Mixed Greys
+  {"100", "100", "W7", "C5", "W3", "C2"},       // 5 Mixed Greys
+  {"100", "100", "E49", "E27", "E13", "E00"},   // 6 Browns
+  {"100", "100", "E49", "E27", "E13", "N2"},    // 7 Dark Grey Browns
+  {"100", "100", "E49", "E27", "N4", "N2"},     // 8 Browns
+  {"100", "100", "E49", "N6", "N4", "N2"},      // 9 Dark Grey Browns
+  {"100", "100", "B37", "N6", "N4", "N2"},      // 10 Dark Grey Blues
+  {"100", "100", "R59", "N6", "N4", "N2"},      // 11 Dark Grey Red
+  {"100", "100", "G29", "N6", "N4", "N2"},      // 12 Dark Grey Violet
+  {"100", "100", "YR09", "N6", "N4", "N2"},     // 13 Dark Grey Orange
+  {"100", "100", "B39", "G28", "B26", "G14"},   // 14 Blue Green
+  {"100", "100", "B39", "V09", "B02", "V04"},   // 15 Purples
+  {"100", "100", "R29", "R27", "R24", "R20"},   // 16 Reds
+  {"100", "E29", "YG99", "Y17", "YG03", "Y11"}, // 17 Yellow, green
+  {"E18", "E15", "E13", "E11", "R20", "E00"}, // 18 Skin Tones
+  {"100", "N3", "G21", "BG72", "B93", "N1"}, //   19 Sea
+  {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
+  {"YG99", "Y17", "YG03", "Y11", "N3", "N2"} // 21 Nature
 };
 
 void settings(){
