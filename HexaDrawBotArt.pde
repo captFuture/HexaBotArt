@@ -24,8 +24,8 @@ final float   paper_size_x = 768 * paper_scale;
 final float   image_size_y = 1024 * image_scale; // desired image size...9999
 final float   image_size_x = 768 * image_scale; // desired image size
 
-/*
-final float   paper_scale = 1;
+/*g
+final float   paper_scale = 1;d
 final float   image_scale = 1;
 final float   paper_size_x = 1024 * paper_scale;
 final float   paper_size_y = 768 * paper_scale;
@@ -35,8 +35,8 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 3;
-int     current_copic_set = 17;
+final int     pen_count = 4;
+int     current_copic_set = 19;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -223,7 +223,7 @@ void setup_squiggles() {
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
   code_comment("loaded image: " + path_selected);
 
-  //image_rotate();
+  image_rotate();
 
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
