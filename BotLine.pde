@@ -31,8 +31,8 @@ class botLine {
       //stroke(c, 255-brightness(c));
       stroke(c);
       //strokeWeight(2);
-      //blendMode(BLEND);
-      blendMode(MULTIPLY);
+      blendMode(BLEND);
+      //blendMode(MULTIPLY);
       line(x1, y1, x2, y2);
     }
   }

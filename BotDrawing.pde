@@ -35,42 +35,6 @@ class botDrawing {
     }
   }
 
-  void render_to_pdf (int line_count) {
-    String pdfname = "pdf\\" + basefile_selected + ".pdf";
-    PGraphics pdf = createGraphics(img.width, img.height, PDF, pdfname);
-    pdf.beginDraw();
-    pdf.background(255, 255, 255);
-    for(int i=line_count; i>0; i--) {
-      if(lines[i].pen_down) {
-        color c = copic.get_original_color(copic_sets[current_copic_set][lines[i].pen_number]);
-        pdf.stroke(c, 255);
-        pdf.line(lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2);
-      }
-    }
-    pdf.dispose();
-    pdf.endDraw();
-    println("PDF created:  " + pdfname);
-  }
-
-  void render_each_pen_to_pdf (int line_count) {
-    for (int p=0; p<=pen_count-1; p++) {
-      String pdfname = "gcode\\gcode_" + basefile_selected + "_pen" + p + "_" + copic_sets[current_copic_set][p] + ".pdf";
-      PGraphics pdf = createGraphics(img.width, img.height, PDF, pdfname);
-      pdf.beginDraw();
-      pdf.background(255, 255, 255);
-      for (int i=line_count; i>0; i--) {
-        if (lines[i].pen_down & lines[i].pen_number == p) {
-          color c = copic.get_original_color(copic_sets[current_copic_set][lines[i].pen_number]);
-          pdf.stroke(c, 255);
-          pdf.line(lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2);
-        }
-      }
-      pdf.dispose();
-      pdf.endDraw();
-      println("PDF created:  " + pdfname);
-    }
-  }
-  
   void set_pen_continuation_flags () {
     float prev_x = 123456.0;
     float prev_y = 654321.0;

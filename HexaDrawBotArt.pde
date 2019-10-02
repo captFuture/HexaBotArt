@@ -8,7 +8,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
-import processing.pdf.*;
+//import processing.pdf.*;
 
 ChildApplet child;
 PImage keyimg;
@@ -137,19 +137,8 @@ void setup() {
   dy = new Limit(); 
   copic = new Copix();
   loadInClass(pfms[current_pfm]);
+  selectInput("Select an image to process:", "fileSelected");
 
-  
-
-  // If the clipboard contains a URL, try to download the picture instead of using local storage.
-  String url = GClip.paste();
-  if (match(url.toLowerCase(), "^https?:...*(jpg|png)") != null) {
-    println("Image URL found on clipboard: "+ url);
-    path_selected = url;
-    state++;
-  } else {
-    println("image URL not found on clipboard");
-    selectInput("Select an image to process:", "fileSelected");
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,9 +348,7 @@ void keyPressed() {
   if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
   if (key == 's') { if (state == 3) { state++; } }
-  if (keyCode == 65 && ctrl_down)  {
-    println("Holly freak, Ctrl-A was pressed!");
-  }
+
   if (key == '9') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
     if (pen_count > 1) { pen_distribution[1] *= 1.05; }
@@ -387,7 +374,6 @@ void keyPressed() {
     if (pen_count > 9) { pen_distribution[9] *= 0.55; }
 }
   if (key == 'g') { 
-    d1.render_to_pdf(display_line_count);
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
     save_jpg();

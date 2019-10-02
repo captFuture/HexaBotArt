@@ -153,7 +153,7 @@ void image_boarder(String fname, int shrink, int blur) {
   // blur:    Guassian blur the boarder, 0 for no blur, 10+ for a lot.
   
   //PImage boarder = createImage(img.width+(shrink*2), img.height+(shrink*2), RGB);
-  PImage temp_boarder = loadImage("boarder/" + fname);
+  PImage temp_boarder = loadImage("border/" + fname);
   temp_boarder.resize(img.width, img.height);
   temp_boarder.filter(GRAY);
   temp_boarder.filter(INVERT);
