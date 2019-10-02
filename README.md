@@ -5,9 +5,6 @@ It takes an original image, manipulates it and generates a drawing path that kin
 This code was specifically written to work with multiple Copic markers. \
 The code was intended to be heavily modified to generate different and unique drawing styles.
 
-If your clipboard contains a URL to an image, the code will download it.  This makes finding usable images easy and straight forword.
-If your clipboard contains a URL to a web site, the code will crash and burn in a spectacular fashion.
-
 ## Key Bindings:
 | Key | Description |
 | ------------- |:-------------|

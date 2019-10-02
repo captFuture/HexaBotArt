@@ -15,7 +15,7 @@ class PFM_original implements pfm {
 
   int          squiggle_count;
   int          darkest_x;
-  int          darkest_y;
+  int          darkest_y; 
   float        darkest_value;
   float        darkest_neighbor = 256;
 
