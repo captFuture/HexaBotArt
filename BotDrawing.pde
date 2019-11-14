@@ -3,7 +3,7 @@
 class botDrawing {
   private int line_count = 0;
   botLine[] lines = new botLine[10000000];
-  String gcode_comment = "";
+  String linecode_comment = "";
   
   void botDrawing() {
   }

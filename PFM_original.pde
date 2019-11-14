@@ -10,7 +10,7 @@ class PFM_original implements pfm {
   final float  desired_brightness = 250;   // How long to process.  You can always stop early with "s" key
   final int    squiggles_till_first_change = 190;
 
-  int          tests = 100;                 // Reasonable values:  13 for development, 720 for final
+  int          tests = 13;                 // Reasonable values:  13 for development, 720 for final
   int          line_length = int(random(3, 40));  // Reasonable values:  3 through 100
 
   int          squiggle_count;
@@ -56,8 +56,8 @@ class PFM_original implements pfm {
   private void find_squiggle() {
     int x, y;
   
-    //find_darkest();
-    find_darkest_area();
+    find_darkest();
+    //find_darkest_area();
     x = darkest_x;
     y = darkest_y;
     squiggle_count++;

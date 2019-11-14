@@ -19,13 +19,13 @@ boolean mousePressedOnParent = false;
 
 final float   paper_scale = 1;
 final float   image_scale = 1;
-final float   paper_size_y = 1024 * paper_scale;
-final float   paper_size_x = 768 * paper_scale;
-final float   image_size_y = 1024 * image_scale; // desired image size...9999
-final float   image_size_x = 768 * image_scale; // desired image size
+final float   paper_size_y = 800 * paper_scale;
+final float   paper_size_x = 600 * paper_scale;
+final float   image_size_y = 800 * image_scale; // desired image size...9999
+final float   image_size_x = 600 * image_scale; // desired image size
 
 /*g
-final float   paper_scale = 1;d
+final float   paper_scale = 1;
 final float   image_scale = 1;
 final float   paper_size_x = 1024 * paper_scale;
 final float   paper_size_y = 768 * paper_scale;
@@ -35,8 +35,8 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 4;
-int     current_copic_set = 19;
+final int     pen_count = 3;
+int     current_copic_set = 5;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -72,7 +72,7 @@ int     morgx = 0;
 int     morgy = 0;
 int     pen_color = 0;
 boolean is_pen_down;
-boolean is_grid_on = true;
+boolean is_grid_on = false;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
@@ -150,10 +150,10 @@ void draw() {
   
   switch(state) {
   case 1: 
-    //println("State=1, Waiting for filename selection");
+    println("State=1, Waiting for filename selection");
     break;
   case 2:
-    //println("State=2, Setup squiggles");
+    println("State=2, Setup squiggles");
     loop();
     setup_squiggles();
     startTime = millis();
