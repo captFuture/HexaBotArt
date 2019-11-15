@@ -13,7 +13,7 @@ class PFM_spiral implements pfm {
     image_crop();
     image_scale(int(image_size_x / pen_width));
     image_unsharpen(img, 3);
-    //image_border("b6.png", 0, 0);
+    image_border("b6.png", 0, 0);
     image_desaturate();
   }
     

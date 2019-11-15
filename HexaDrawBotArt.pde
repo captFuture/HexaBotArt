@@ -36,7 +36,7 @@ final float   image_size_y = 768 * image_scale; // desired image size
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 final int     pen_count = 3;
-int     current_copic_set = 5;
+int           current_copic_set = 22;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -46,7 +46,7 @@ final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 fo
 
 // Every good program should have a shit pile of badly named globals.
 Class cl = null;
-pfm ocl;
+pfm genpath;
 int current_pfm = 0;
 String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
 
@@ -106,10 +106,11 @@ String[][] copic_sets = {
   {"100", "100", "B39", "V09", "B02", "V04"},   // 15 Purples
   {"100", "100", "R29", "R27", "R24", "R20"},   // 16 Reds
   {"100", "E29", "YG99", "Y17", "YG03", "Y11"}, // 17 Yellow, green
-  {"E18", "E15", "E13", "E11", "R20", "E00"}, // 18 Skin Tones
-  {"100", "N3", "G21", "BG72", "B93", "N1"}, //   19 Sea
+  {"E18", "E15", "E13", "E11", "R20", "E00"},   // 18 Skin Tones
+  {"100", "N3", "G21", "BG72", "B93", "N1"},    // 19 Sea
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
-  {"YG99", "Y17", "YG03", "Y11", "N3", "N2"} // 21 Nature
+  {"YG99", "Y17", "YG03", "Y11", "N3", "N2"},    // 21 Nature
+  {"100", "B39", "V09", "B02", "V04", "BV20", }   // 22 Light Purples
 };
 
 void settings(){
@@ -163,12 +164,12 @@ void draw() {
     if (display_line_count <= 1) {
       background(255);
     } 
-    ocl.find_path();
+    genpath.find_path();
     display_line_count = d1.line_count;
     break;
   case 4: 
     println("State=4, pfm.post_processing");
-    ocl.post_processing();
+    genpath.post_processing();
 
     set_even_distribution();
     normalize_distribution();
@@ -228,7 +229,7 @@ void setup_squiggles() {
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
 
-  ocl.pre_processing();
+  genpath.pre_processing();
   img.loadPixels();
   img_reference = createImage(img.width, img.height, RGB);
   img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
@@ -254,7 +255,7 @@ void setup_squiggles() {
   //code_comment("screen_scale X: " + nf(screen_scale_x,0,2));
   //code_comment("screen_scale Y: " + nf(screen_scale_y,0,2));
   //code_comment("screen_scale:   " + nf(screen_scale,0,2));
-  ocl.output_parameters();
+  genpath.output_parameters();
 
   state++;
 }
@@ -478,13 +479,13 @@ public void loadInClass(String pfm_name){
     println("\nError unknown PFM: " + className); 
   }
   
-  ocl = null;
+  genpath = null;
   if (cl != null) {
     try {
       // Get the constructor(s)
       java.lang.reflect.Constructor[] ctors = cl.getDeclaredConstructors();
       // Create an instance with the parent object as parameter (needed for inner classes)
-      ocl = (pfm) ctors[0].newInstance(new Object[] { this });
+      genpath = (pfm) ctors[0].newInstance(new Object[] { this });
     } catch (InstantiationException e) {
       println("Cannot create an instance of " + className);
     } catch (IllegalAccessException e) {
