@@ -12,6 +12,7 @@ import java.util.Map;
 
 ChildApplet child;
 PImage keyimg;
+QImage qimg;
 PFont f;
 boolean mousePressedOnParent = false;
 
@@ -23,7 +24,9 @@ final float   paper_size_y = 800 * paper_scale;
 final float   paper_size_x = 600 * paper_scale;
 final float   image_size_y = 800 * image_scale; // desired image size...9999
 final float   image_size_x = 600 * image_scale; // desired image size
-
+final int canvas_size_x = 1024;
+final int canvas_size_y = 1024;
+final int refscale = 5;
 /*g
 final float   paper_scale = 1;
 final float   image_scale = 1;
@@ -35,7 +38,7 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 3;
+final int     pen_count = 6;
 int           current_copic_set = 22;
 
 final char    gcode_decimal_seperator = '.';    
@@ -58,6 +61,8 @@ String  display_mode = "drawing";
 PImage  img_orginal;               // The original image
 PImage  img_reference;             // After pre_processing, croped, scaled, border, etc.  This is what we will try to draw. 
 PImage  img;                       // Used during drawing for current brightness levels.  Gets damaged during drawing.
+PImage  img_reducecolor;
+PImage  small_img_reference;
 float   gcode_offset_x;
 float   gcode_offset_y;
 float   gcode_scale;
@@ -110,23 +115,25 @@ String[][] copic_sets = {
   {"100", "N3", "G21", "BG72", "B93", "N1"},    // 19 Sea
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
   {"YG99", "Y17", "YG03", "Y11", "N3", "N2"},    // 21 Nature
-  {"100", "B39", "V09", "B02", "V04", "BV20", }   // 22 Light Purples
+  {"100", "B39", "V09", "B02", "V04", "V04", }   // 22 Light Purples
 };
 
 void settings(){
-  size(1024,1024, P3D);
+  size(canvas_size_x,canvas_size_y, P3D);
   smooth();
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  
   keyimg = loadImage("data/keybindings.jpg");
   //printArray(PFont.list());
   f = createFont("arial.ttf", 12);
   textFont(f);
     
   surface.setTitle("Drawbot - SVG creator");
+  
   colorMode(RGB);
   frameRate(999);
 
@@ -139,6 +146,7 @@ void setup() {
   copic = new Copix();
   loadInClass(pfms[current_pfm]);
   selectInput("Select an image to process:", "fileSelected");
+
 
 }
 
@@ -157,6 +165,8 @@ void draw() {
     println("State=2, Setup squiggles");
     loop();
     setup_squiggles();
+    
+    reduce_palette();
     startTime = millis();
     break;
   case 3: 
@@ -186,6 +196,7 @@ void draw() {
   case 5: 
     render_all();
     noLoop();
+    draw_reduced();
     break;
   default:
     println("invalid state: " + state);
@@ -222,6 +233,7 @@ void setup_squiggles() {
   d1.line_count = 0;
   //randomSeed(millis());
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
+
   code_comment("loaded image: " + path_selected);
 
   image_rotate();
@@ -229,10 +241,17 @@ void setup_squiggles() {
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
 
+  img_reducecolor = createImage(img.width/refscale, img.height/refscale, RGB);
+  img_reducecolor.copy(img, 0, 0, img.width, img.height, 0, 0, img.width/refscale, img.height/refscale);
+
   genpath.pre_processing();
   img.loadPixels();
+  
   img_reference = createImage(img.width, img.height, RGB);
   img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+  
+  small_img_reference = createImage(img.width/refscale, img.height/refscale, RGB);
+  small_img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width/refscale, img.height/refscale);
   
   gcode_scale_x = image_size_x / img.width;
   gcode_scale_y = image_size_y / img.height;
@@ -502,6 +521,7 @@ public void loadInClass(String pfm_name){
 void mousePressed() {
   morgx = mouseX - mx; 
   morgy = mouseY - my; 
+  mouse_point();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -523,3 +543,108 @@ interface pfm {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void reduce_palette(){
+  qimg = new QImage(img_reducecolor, 16);
+}
+
+
+void draw_reduced(){
+  println("Drawing image");
+  image(qimg.getImage(), canvas_size_x-20-img_reference.width/refscale, 10);
+  image(small_img_reference, canvas_size_x-20-img_reference.width/refscale, 180);
+  
+  int[] col = qimg.getColorTable();
+  
+  for (int id = 0; id < 15; id++) {
+    //print("Red: "+red(col[id]));
+    //print(" Green: "+green(col[id]));
+    //print(" Blue: "+blue(col[id]));
+    //println();
+  }
+  
+}
+
+/**
+ This class is used to store the result of the image quantization.
+ The final image comprises a color table and a 2D array containing 
+ an index into the color table.
+ It also creates a new PImage with the reduced color set for 
+ convenience.
+ */
+public class QImage {
+  final int[][] pixels;
+  final int w, h;
+  final int[] colortable;
+  final PImage reducedImage;
+
+  /**
+   img = the PImage we want to quantize
+   maxNbrColors - color table size
+   */
+  public QImage(PImage img, int maxNbrColors) {
+    // Pixel data needs to be in 2D array for Quantize class.
+    w = img.width;
+    h = img.height;
+    pixels = new int[h][w];
+    img.loadPixels();
+    int[] p = img.pixels;
+    int n = 0;
+    for (int y = 0; y < h; y++) {
+      for (int x = 0; x < w; x++) {
+        pixels[y][x] = p[n++];
+      }
+    } 
+    // Quantize the image
+    colortable = Quantize.quantizeImage(pixels, maxNbrColors);
+    //Create a PImage with the reduced color pallette
+    reducedImage = createImage(w, h, ARGB);
+    for (int y = 0; y < h; y++) {
+      for (int x = 0; x < w; x++) {
+        reducedImage.set(x, y, colortable[pixels[y][x]]);
+      }
+    }
+  }
+
+  /**
+   Convenience method to draw the quatized image at a 
+   given position.
+   */
+  public void displayRAW(int px, int py) {
+    for (int y = 0; y < h; y++) {
+      for (int x = 0; x < w; x++) {
+        set(px + x, py+y, colortable[pixels[y][x]]);
+      }
+    }
+  }
+
+  /**
+   Get the pixel color index data
+   */
+  public int[][] getPixels() {
+    return pixels;
+  }
+
+  /**
+   Get the color table data
+   */
+  public int[] getColorTable() {
+    return colortable;
+  }
+
+  /**
+   Get the maximum number of colors in the reduced image.
+   The actual number of unique colors maybe less than this.
+   */
+  public int nbrColors() {
+    return colortable.length;
+  }
+
+  /**
+   Convenience method to get the quatized image as a PImage
+   that can be used directly in processing
+   */
+  public PImage getImage() {
+    return reducedImage;
+  }
+}
