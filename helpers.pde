@@ -12,11 +12,22 @@ class ChildApplet extends PApplet {
   }
   public void setup() { 
     surface.setTitle("Key table");
+    // GUI for easier handling
+    //gui = new ControlP5(this);
+    //gui.addSlider("slider_pen_count").setSize(130, 20).setCaptionLabel("Pen count").setPosition(10, 20).setRange(1, 6).setValue(pen_count).setColorCaptionLabel(color(0)).setNumberOfTickMarks(6);
+    //gui.getController("slider_pen_count").getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE);
   }
 
   public void draw() {
     background(255);
     image(keyimg, 0, 0);
+  }
+  
+  
+  void slider_pen_count(int value){
+    
+    println("a slider value changed");
+    
   }
 
 }
@@ -110,7 +121,7 @@ void grid() {
 // Experimental, mark coordinates of mouse locations to console.
 // Useful for locating vanishing points etc.
 // Currently works correctly with screen_scale, translation and rotation.
-void mouse_point() {
+/*void mouse_point() {
   int xpixel = 0;
   int ypixel = 0;
 
@@ -143,6 +154,6 @@ void mouse_point() {
         print(" Blue: "+blue(img_orginal.pixels[xpixel + ypixel * canvas_size_x]));
         println();
    
-}
+}*/
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

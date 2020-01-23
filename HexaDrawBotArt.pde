@@ -8,7 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
-//import processing.pdf.*;
+import controlP5.*;
+ControlP5 gui;
 
 ChildApplet child;
 PImage keyimg;
@@ -38,8 +39,8 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-final int     pen_count = 6;
-int           current_copic_set = 22;
+int     pen_count = 4;
+int     current_copic_set = 22;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -51,7 +52,7 @@ final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 fo
 Class cl = null;
 pfm genpath;
 int current_pfm = 0;
-String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
+String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares", "PFM_"}; 
 
 int     state = 1;
 int     pen_selected = 0;
@@ -126,6 +127,7 @@ void settings(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  
   
   keyimg = loadImage("data/keybindings.jpg");
   //printArray(PFont.list());
@@ -363,7 +365,7 @@ void keyPressed() {
   if (key == ')' && pen_count > 9) { pen_distribution[9] *= 0.9; }
   if (key == 't') { set_even_distribution(); }
   if (key == 'y') { set_black_distribution(); }
-  if (key == 'x') { mouse_point(); }  
+  //if (key == 'x') { mouse_point(); }  
   if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
   if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
@@ -518,18 +520,18 @@ public void loadInClass(String pfm_name){
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void mousePressed() {
+/*void mousePressed() {
   morgx = mouseX - mx; 
   morgy = mouseY - my; 
-  mouse_point();
-}
+  //mouse_point();
+}*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void mouseDragged() {
+/*void mouseDragged() {
   mx = mouseX-morgx; 
   my = mouseY-morgy; 
   redraw();
-}
+}*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // This is the pfm interface, it contains the only methods the main code can call.
@@ -551,8 +553,14 @@ void reduce_palette(){
 
 void draw_reduced(){
   println("Drawing image");
-  image(qimg.getImage(), canvas_size_x-20-img_reference.width/refscale, 10);
-  image(small_img_reference, canvas_size_x-20-img_reference.width/refscale, 180);
+  if(img.width > img.height){
+    println("Image rotated");
+    //image(qimg.getImage(), canvas_size_x-20-img_reference.height/refscale, 10);
+    //image(small_img_reference, canvas_size_x-20-img_reference.height/refscale, 280);
+  }else{
+    //image(qimg.getImage(), canvas_size_x-20-img_reference.width/refscale, 10);
+    //image(small_img_reference, canvas_size_x-20-img_reference.width/refscale, 280);
+  }
   
   int[] col = qimg.getColorTable();
   
