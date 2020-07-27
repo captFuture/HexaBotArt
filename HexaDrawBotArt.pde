@@ -39,8 +39,8 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-int     pen_count = 4;
-int     current_copic_set = 22;
+int     pen_count = 6;
+int     current_copic_set = 23;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -116,7 +116,8 @@ String[][] copic_sets = {
   {"100", "N3", "G21", "BG72", "B93", "N1"},    // 19 Sea
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
   {"YG99", "Y17", "YG03", "Y11", "N3", "N2"},    // 21 Nature
-  {"100", "B39", "V09", "B02", "V04", "V04", }   // 22 Light Purples
+  {"100", "B39", "V09", "B02", "V04", "V04" },   // 22 Light Purples
+  {"100", "B39", "B26", "B14", "BG07", "BG15"}   // 22 Turquoise
 };
 
 void settings(){
@@ -134,7 +135,7 @@ void setup() {
   f = createFont("arial.ttf", 12);
   textFont(f);
     
-  surface.setTitle("Drawbot - SVG creator");
+  surface.setTitle("Drewie - SVG creator");
   
   colorMode(RGB);
   frameRate(999);

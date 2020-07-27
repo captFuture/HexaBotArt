@@ -452,10 +452,12 @@ class Copix {
     original_color.put("B93", color(#95c1da));  sketch_name.put("B93", "Light Crockery Blue");
     original_color.put("BG02", color(#c6e8ea));  original_name.put("BG02", "New Blue");
     original_color.put("BG05", color(#83d2e1));  original_name.put("BG05", "Holiday Blue");
+    original_color.put("BG07", color(#1db8ce));  original_name.put("BG07", "Petroleum Blue");
     original_color.put("BG09", color(#01b1c9));  original_name.put("BG09", "Blue Green");
     original_color.put("BG10", color(#dcf0ef));  original_name.put("BG10", "Cool Shadow");
     original_color.put("BG11", color(#ceebf1));  original_name.put("BG11", "Moon White");
     original_color.put("BG13", color(#c4e7e9));  original_name.put("BG13", "Mint Green");
+    
     original_color.put("BG15", color(#a0d9d2));  original_name.put("BG15", "Aqua");
     original_color.put("BG18", color(#37c0b0));  original_name.put("BG18", "Teal Blue");
     original_color.put("BG32", color(#bce2d7));  original_name.put("BG32", "Aqua Mint");
