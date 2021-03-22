@@ -12,10 +12,6 @@ class ChildApplet extends PApplet {
   }
   public void setup() { 
     surface.setTitle("Key table");
-    // GUI for easier handling
-    //gui = new ControlP5(this);
-    //gui.addSlider("slider_pen_count").setSize(130, 20).setCaptionLabel("Pen count").setPosition(10, 20).setRange(1, 6).setValue(pen_count).setColorCaptionLabel(color(0)).setNumberOfTickMarks(6);
-    //gui.getController("slider_pen_count").getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE);
   }
 
   public void draw() {

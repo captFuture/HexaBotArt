@@ -8,8 +8,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
-import controlP5.*;
-ControlP5 gui;
 
 ChildApplet child;
 PImage keyimg;
@@ -28,7 +26,7 @@ final float   image_size_x = 600 * image_scale; // desired image size
 final int canvas_size_x = 1024;
 final int canvas_size_y = 1024;
 final int refscale = 5;
-/*g
+/*
 final float   paper_scale = 1;
 final float   image_scale = 1;
 final float   paper_size_x = 1024 * paper_scale;
@@ -39,7 +37,9 @@ final float   image_size_y = 768 * image_scale; // desired image size
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-int     pen_count = 6;
+
+//SET THIS
+int     pen_count = 1;
 int     current_copic_set = 23;
 
 final char    gcode_decimal_seperator = '.';    
@@ -117,7 +117,7 @@ String[][] copic_sets = {
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
   {"YG99", "Y17", "YG03", "Y11", "N3", "N2"},    // 21 Nature
   {"100", "B39", "V09", "B02", "V04", "V04" },   // 22 Light Purples
-  {"100", "B39", "B26", "B14", "BG07", "BG15"}   // 22 Turquoise
+  {"100", "B39", "B26", "B14", "BG07", "BG15"}   // 23 Turquoise
 };
 
 void settings(){
