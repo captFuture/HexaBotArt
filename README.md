@@ -1,5 +1,8 @@
 # HexaDrawBotArt
 
+Heavily depending on https://github.com/Scott-Cooper/Drawbot_image_to_gcode_v2
+Changed output to svg and some other functions as well as keystoke map in gui.
+
 This code is used to generate svg files for drawbots, polargraphs or other vertical drawing machines. \
 It takes an original image, manipulates it and generates a drawing path that kinda sorta looks like the original image. \
 This code was specifically written to work with multiple Copic markers. \
