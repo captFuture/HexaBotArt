@@ -65,3 +65,8 @@ The code was intended to be heavily modified to generate different and unique dr
 | ; | Change Copic marker sets, decrement |
 
 
+Some Demodrawings done on a Makelangelo Robot http://www.makelangelo.com/
+
+![drawbot1](http://tarantl.com/drawbot1.jpg)
+![drawbot2](http://tarantl.com/drawbot2.jpg)
+![drawbot3](http://tarantl.com/drawbot3.jpg)
