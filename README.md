@@ -26,10 +26,6 @@ The code was intended to be heavily modified to generate different and unique dr
 | \<ctrl> 4 | Display drawing, pen 3 only |
 | \<ctrl> 5 | Display drawing, pen 4 only |
 | \<ctrl> 6 | Display drawing, pen 5 only |
-| \<ctrl> 7 | Display drawing, pen 6 only |
-| \<ctrl> 8 | Display drawing, pen 7 only |
-| \<ctrl> 9 | Display drawing, pen 8 only |
-| \<ctrl> 0 | Display drawing, pen 9 only |
 | S | Stop path finding prematurely |
 | Esc | Exit running program |
 | , | Decrease the total number of lines drawn |
@@ -46,21 +42,13 @@ The code was intended to be heavily modified to generate different and unique dr
 | 4 | Increase percentage of lines drawn by pen 3 |
 | 5 | Increase percentage of lines drawn by pen 4 |
 | 6 | Increase percentage of lines drawn by pen 5 |
-| 7 | Increase percentage of lines drawn by pen 6 |
-| 8 | Increase percentage of lines drawn by pen 7 |
-| 9 | Increase percentage of lines drawn by pen 8 |
-| 0 | Increase percentage of lines drawn by pen 9 |
 | shift 0 | Decrease percentage of lines drawn by pen 0 |
 | shift 1 | Decrease percentage of lines drawn by pen 1 |
 | shift 2 | Decrease percentage of lines drawn by pen 2 |
 | shift 3 | Decrease percentage of lines drawn by pen 3 |
 | shift 4 | Decrease percentage of lines drawn by pen 4 |
 | shift 5 | Decrease percentage of lines drawn by pen 5 |
-| shift 6 | Decrease percentage of lines drawn by pen 6 |
-| shift 7 | Decrease percentage of lines drawn by pen 7 |
-| shift 8 | Decrease percentage of lines drawn by pen 8 |
-| shift 9 | Decrease percentage of lines drawn by pen 9 |
-| shift 0 | Decrease percentage of lines drawn by pen 0 |
+
 | : | Change Copic marker sets, increment |
 | ; | Change Copic marker sets, decrement |
 

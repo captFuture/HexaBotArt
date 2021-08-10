@@ -39,7 +39,7 @@ final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
 //SET THIS
-int     pen_count = 6;
+int     pen_count = 6;                //up to 6 pens
 int     current_copic_set = 15;
 
 final char    gcode_decimal_seperator = '.';    
