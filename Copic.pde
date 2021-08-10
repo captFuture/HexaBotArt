@@ -1,14 +1,3 @@
-// Regex used in sublime to clean up html from:
-// Source data:  https://imaginationinternationalinc.com/copic/store/color-picker/
-//
-// ^.*color:
-// ; cursor.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*<h5>
-// </h5>\n.*<p>
-// </p>\n.*clearfix.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n
-// ^(.*?),(.*?),(.*)
-// sketch_color.put("$2"), color($1));  sketch_name.put("$2"), "$3");
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void copic_alpha_simulator() {
   color[] p = new color[5]; 

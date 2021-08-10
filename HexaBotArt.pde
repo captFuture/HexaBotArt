@@ -39,8 +39,8 @@ final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
 //SET THIS
-int     pen_count = 1;
-int     current_copic_set = 23;
+int     pen_count = 6;
+int     current_copic_set = 15;
 
 final char    gcode_decimal_seperator = '.';    
 final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
@@ -52,7 +52,7 @@ final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 fo
 Class cl = null;
 pfm genpath;
 int current_pfm = 0;
-String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares", "PFM_"}; 
+String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
 
 int     state = 1;
 int     pen_selected = 0;
@@ -93,6 +93,7 @@ botDrawing d1;
 
 float[] pen_distribution = new float[pen_count];
 
+// use Copic.pde to get colors of pens and generate your own color scheme
 String[][] copic_sets = {
   {"100", "N10", "N8", "N6", "N4", "N2"},       // 0 Dark Greys
   {"100", "100", "N7", "N5", "N3", "N2"},       // 1 Light Greys
