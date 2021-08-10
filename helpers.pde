@@ -7,7 +7,7 @@ class ChildApplet extends PApplet {
   }
 
   public void settings() {
-    size(360, 700, P3D);
+    size(360, 900, P3D);
     smooth();
   }
   public void setup() { 
