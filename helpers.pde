@@ -81,7 +81,7 @@ void grid() {
     
     // Screen center line
     stroke(255, 64, 64, 80);
-    strokeWeight(4);
+    strokeWeight(2);
     line(image_center_x, -999999, image_center_x, 999999);
     line(-999999, image_center_y, 999999, image_center_y);
     strokeWeight(1);

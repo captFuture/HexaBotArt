@@ -41,20 +41,6 @@ void image_dilate() {
 }
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void save_jpg() {
-  // Currently disabled.
-  //PImage  img_drawing;
-  PImage  img_drawing2;
-
-  // Save resuling image
-  //save("tmppng.png");
-  //img_drawing = loadImage("tmppng.png");
-  img_drawing2 = createImage(img.width, img.height, RGB);
-  //img_drawing2.copy(img_drawing, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
-  img_drawing2.save(sketchPath("") + "drawings\\" + basefile_selected + ".png");
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_rotate() {
   //image[y][x]                                     // assuming this is the original orientation
   //image[x][original_width - y]                    // rotated 90 degrees ccw

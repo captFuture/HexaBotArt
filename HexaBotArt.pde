@@ -16,35 +16,30 @@ PFont f;
 boolean mousePressedOnParent = false;
 
 // Constants
+final float   image_scale = 1;
+final float   paper_size_y = 594;
+final float   paper_size_x = 420;
+final float   image_size_y = 594 * image_scale; // desired image size...9999
+final float   image_size_x = 420 * image_scale; // desired image size
+final int     canvas_size_x = 1024;
+final int     canvas_size_y = 1024;
+final int     refscale = 5;
 
-final float   paper_scale = 1;
-final float   image_scale = 1;
-final float   paper_size_y = 800 * paper_scale;
-final float   paper_size_x = 600 * paper_scale;
-final float   image_size_y = 800 * image_scale; // desired image size...9999
-final float   image_size_x = 600 * image_scale; // desired image size
-final int canvas_size_x = 1024;
-final int canvas_size_y = 1024;
-final int refscale = 5;
-/*
-final float   paper_scale = 1;
-final float   image_scale = 1;
-final float   paper_size_x = 1024 * paper_scale;
-final float   paper_size_y = 768 * paper_scale;
-final float   image_size_x = 1024 * image_scale; // desired image size
-final float   image_size_y = 768 * image_scale; // desired image size
-*/
+final boolean makelangelo = true;
+final int     penup = 90;
+final int     pendown = 0;
+final int     servospeed = 1;
 
 final float   paper_top_to_origin = 0;  //mm
 final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
 //SET THIS
-int     pen_count = 6;                //up to 6 pens
-int     current_copic_set = 15;
+int           pen_count = 6;                //up to 6 pens
+int           current_copic_set = 15;
 
 final char    gcode_decimal_seperator = '.';    
-final int     gcode_decimals = 2;             // Number of digits right of the decimal point in the gcode files.
-final int     svg_decimals = 2;               // Number of digits right of the decimal point in the SVG file.
+final int     gcode_decimals = 0;             // Number of digits right of the decimal point in the gcode files.
+final int     svg_decimals = 0;               // Number of digits right of the decimal point in the SVG file.
 final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 for inches, and between 444 and 529.2 for cubits.
 
 
@@ -78,7 +73,7 @@ int     morgx = 0;
 int     morgy = 0;
 int     pen_color = 0;
 boolean is_pen_down;
-boolean is_grid_on = false;
+boolean is_grid_on = true;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
@@ -260,8 +255,8 @@ void setup_squiggles() {
   gcode_scale_x = image_size_x / img.width;
   gcode_scale_y = image_size_y / img.height;
   gcode_scale = min(gcode_scale_x, gcode_scale_y);
-  gcode_offset_x = - (img.width * gcode_scale / 2.0);  
-  gcode_offset_y = - (paper_top_to_origin - (paper_size_y - (img.height * gcode_scale)) / 2.0);
+  gcode_offset_x = - (paper_size_x / 2.0);  
+  gcode_offset_y = - (paper_size_y / 2.0);
 
   screen_scale_x = width / (float)img.width;
   screen_scale_y = height / (float)img.height;
@@ -269,12 +264,12 @@ void setup_squiggles() {
   screen_scale_org = screen_scale;
   
   code_comment("final dimensions: " + img.width + " by " + img.height);
-  code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
-  code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
-  code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2) + "      " + nf(img.width * gcode_scale/25.4,0,2) + " by " + nf(img.height * gcode_scale/25.4,0,2));
-  code_comment("gcode_scale X:  " + nf(gcode_scale_x,0,2));
-  code_comment("gcode_scale Y:  " + nf(gcode_scale_y,0,2));
-  code_comment("gcode_scale:    " + nf(gcode_scale,0,2));
+  code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2));
+  code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2));
+  code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2));
+  //code_comment("gcode_scale X:  " + nf(gcode_scale_x,0,2));
+  //code_comment("gcode_scale Y:  " + nf(gcode_scale_y,0,2));
+  //code_comment("gcode_scale:    " + nf(gcode_scale,0,2));
   //code_comment("screen_scale X: " + nf(screen_scale_x,0,2));
   //code_comment("screen_scale Y: " + nf(screen_scale_y,0,2));
   //code_comment("screen_scale:   " + nf(screen_scale,0,2));
@@ -400,7 +395,9 @@ void keyPressed() {
   if (key == 'g') { 
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
-    save_jpg();
+    if(makelangelo == true){
+        create_gcode_files(display_line_count);
+    }
   }
 
   if (key == '\\') { screen_scale = screen_scale_org; screen_rotate=0; mx=0; my=0; }
