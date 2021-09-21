@@ -62,5 +62,14 @@ Some Demodrawings done on a Makelangelo Robot http://www.makelangelo.com/
 There are some demo Images in the /pics folder and generated files are in the /svg folder.
 The file named "compplete_****.svg shows the complete drawing and in the subfolder there is a file for each color. I then load the svgs into the Makelangelo one by one, home the machine, insert the pen and start.
 
+
 I use a special gondola on my Makelangelo 5:
 https://www.thingiverse.com/thing:4929245
+
+
++++ LATEST REVISION +++
+Makelangelo 5+ can now be flashed with an official Marlin Firmware
+The latest version of HexaBotArt generates GCODE files compatible with Marlin for Makelangelo
+
+Thanks to Dan from Marginally Clever https://github.com/MarginallyClever
+Check out his great Machines and let's join forces :D
