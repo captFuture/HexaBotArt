@@ -184,6 +184,8 @@ void create_gcode_file (int line_count) {
   
   for (int p=pen_count-1; p>=0; p--) {    
     OUTPUT.println("(Code for Pen " + copic_sets[current_copic_set][p] + ")");
+    
+    OUTPUT.println("M300 S2093 P200");
     // Penup movement and waiting for user input (changing pen)
     OUTPUT.println("M280 P0 S"+penup+" T"+servospeed);
     OUTPUT.println("M0 Pen "+ copic_sets[current_copic_set][p] +" and click");
