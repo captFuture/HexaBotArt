@@ -26,8 +26,8 @@ final int     canvas_size_y = 1024;
 final int     refscale = 5;
 
 final boolean makelangelo = true;
-final int     penup = 90;
-final int     pendown = 0;
+final int     penup = 75;
+final int     pendown = 20;
 final int     servospeed = 1;
 
 final float   paper_top_to_origin = 0;  //mm
@@ -396,6 +396,7 @@ void keyPressed() {
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
     if(makelangelo == true){
+        create_gcode_file(display_line_count);
         create_gcode_files(display_line_count);
     }
   }
