@@ -33,6 +33,11 @@ void create_gcode_files (int line_count) {
   float y;
   float distance;
   
+  float xmax = 0;
+  float xmin = 0;
+  float ymax = 0;
+  float ymin = 0;
+ 
   // Loop over all lines for every pen.
   for(int p=0; p<pen_count; p++) {   
   
@@ -62,9 +67,15 @@ void create_gcode_files (int line_count) {
         int roundedY2 = round(d1.lines[i].y2);
         
         float gcode_scaled_x1 = roundedX1 * gcode_scale + gcode_offset_x;
-        float gcode_scaled_y1 = roundedY1 * gcode_scale + gcode_offset_y;
+        float gcode_scaled_y1 = (roundedY1 * gcode_scale + gcode_offset_y) * -1;
         float gcode_scaled_x2 = roundedX2 * gcode_scale + gcode_offset_x;
-        float gcode_scaled_y2 = roundedY2 * gcode_scale + gcode_offset_y;
+        float gcode_scaled_y2 = (roundedY2 * gcode_scale + gcode_offset_y) * -1;
+        
+        //calculate min-max coordinates for getting maximum size of image
+        if(gcode_scaled_x1 < 0 && gcode_scaled_x1 < xmin){ xmin = gcode_scaled_x1; }
+        if(gcode_scaled_x2 > 0 && gcode_scaled_x2 > xmax){ xmax = gcode_scaled_x2; }
+        if(gcode_scaled_y1 < 0 && gcode_scaled_y1 < ymin){ ymin = gcode_scaled_y1; }
+        if(gcode_scaled_y2 > 0 && gcode_scaled_y2 > ymax){ ymax = gcode_scaled_y2; }
 
         distance = sqrt(sq(abs(gcode_scaled_x1 - gcode_scaled_x2)) + sq(abs(gcode_scaled_y1 - gcode_scaled_y2)) );
  
@@ -120,7 +131,9 @@ void create_gcode_files (int line_count) {
     }
     gcode_trailer();
     OUTPUT.println("(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
-    OUTPUT.println("(Pen was lifted " + pen_lifts + " times for " + pen_movement  / 25.4 / 12 + " feet)");
+    OUTPUT.println("(Drawing coordinates- xmin: "+xmin+" xmax: "+xmax+" ymin: "+ymin+" ymax: "+ymax+" )");
+    
+    
 
     OUTPUT.flush();
     OUTPUT.close();
@@ -144,6 +157,11 @@ void create_gcode_file (int line_count) {
   float distance;
   int roundedX;
   int roundedY;
+  
+  float xmax = 0;
+  float xmin = 0;
+  float ymax = 0;
+  float ymin = 0;
   
   is_pen_down = false;
   pen_lifts = 2;
@@ -179,9 +197,15 @@ void create_gcode_file (int line_count) {
         int roundedY2 = round(d1.lines[i].y2);
         
         float gcode_scaled_x1 = roundedX1 * gcode_scale + gcode_offset_x;
-        float gcode_scaled_y1 = roundedY1 * gcode_scale + gcode_offset_y;
+        float gcode_scaled_y1 = (roundedY1 * gcode_scale + gcode_offset_y) * -1;
         float gcode_scaled_x2 = roundedX2 * gcode_scale + gcode_offset_x;
-        float gcode_scaled_y2 = roundedY2 * gcode_scale + gcode_offset_y;
+        float gcode_scaled_y2 = (roundedY2 * gcode_scale + gcode_offset_y) * -1;
+        
+        //calculate min-max coordinates for getting maximum size of image
+        if(gcode_scaled_x1 < 0 && gcode_scaled_x1 < xmin){ xmin = gcode_scaled_x1; }
+        if(gcode_scaled_x2 > 0 && gcode_scaled_x2 > xmax){ xmax = gcode_scaled_x2; }
+        if(gcode_scaled_y1 < 0 && gcode_scaled_y1 < ymin){ ymin = gcode_scaled_y1; }
+        if(gcode_scaled_y2 > 0 && gcode_scaled_y2 > ymax){ ymax = gcode_scaled_y2; }
 
         distance = sqrt(sq(abs(gcode_scaled_x1 - gcode_scaled_x2)) + sq(abs(gcode_scaled_y1 - gcode_scaled_y2)) );
  
@@ -240,10 +264,8 @@ void create_gcode_file (int line_count) {
    
   gcode_trailer();
   OUTPUT.println("(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
-  OUTPUT.println("(Pen was lifted " + pen_lifts + " times for " + pen_movement  / 25.4 / 12 + " feet)");
-
+  OUTPUT.println("(Drawing coordinates- xmin: "+xmin+" xmax: "+xmax+" ymin: "+ymin+" ymax: "+ymax+" )");
+    
   OUTPUT.flush();
   OUTPUT.close();
 }
-
-

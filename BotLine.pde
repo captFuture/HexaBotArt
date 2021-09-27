@@ -30,7 +30,7 @@ class botLine {
       color c = copic.get_original_color(copic_sets[current_copic_set][pen_number]);
       stroke(c, 255-brightness(c));
       //stroke(c);
-      //strokeWeight(1);
+      //strokeWeight(3);
       //blendMode(BLEND);
       blendMode(MULTIPLY);
       line(x1, y1, x2, y2);

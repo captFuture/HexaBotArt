@@ -19,16 +19,15 @@ class botDrawing {
   }
   
   void render_some (int line_count) {
-    for (int i=1; i<line_count; i++) {
-      lines[i].render_with_copic();
-    }
+      for (int i=1; i<line_count; i++) {
+        lines[i].render_with_copic();
+      }
   }
 
   void render_one_pen (int line_count, int pen) {
     color c = color(255, 0, 0);
 
     for (int i=1; i<line_count; i++) {
-    //for (int i=line_count; i>1; i--) {
       if (lines[i].pen_number == pen) {
         lines[i].render_with_copic();
       }

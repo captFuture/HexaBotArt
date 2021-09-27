@@ -13,6 +13,7 @@ ChildApplet child;
 PImage keyimg;
 QImage qimg;
 PFont f;
+PGraphics pg;
 boolean mousePressedOnParent = false;
 
 // Constants
@@ -21,9 +22,9 @@ final float   paper_size_y = 594;
 final float   paper_size_x = 420;
 final float   image_size_y = 594 * image_scale; // desired image size...9999
 final float   image_size_x = 420 * image_scale; // desired image size
-final int     canvas_size_x = 1024;
-final int     canvas_size_y = 1024;
-final int     refscale = 5;
+final int     canvas_size_y = 768;
+final int     canvas_size_x = 545;
+final int     refscale = 1;                     //sample area
 
 final boolean makelangelo = true;
 final int     penup = 75;
@@ -31,7 +32,7 @@ final int     pendown = 20;
 final int     servospeed = 1;
 
 final float   paper_top_to_origin = 0;  //mm
-final float   pen_width = 0.8;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
+final float   pen_width = 1;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
 //SET THIS
 int           pen_count = 6;                //up to 6 pens
@@ -42,8 +43,6 @@ final int     gcode_decimals = 0;             // Number of digits right of the d
 final int     svg_decimals = 0;               // Number of digits right of the decimal point in the SVG file.
 final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 for inches, and between 444 and 529.2 for cubits.
 
-
-// Every good program should have a shit pile of badly named globals.
 Class cl = null;
 pfm genpath;
 int current_pfm = 0;
@@ -73,7 +72,7 @@ int     morgx = 0;
 int     morgy = 0;
 int     pen_color = 0;
 boolean is_pen_down;
-boolean is_grid_on = true;
+boolean is_grid_on = false;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
@@ -116,16 +115,17 @@ String[][] copic_sets = {
   {"100", "B39", "B26", "B14", "BG07", "BG15"}   // 23 Turquoise
 };
 
+String outfilename = "";
+
+
 void settings(){
-  size(canvas_size_x,canvas_size_y, P3D);
+  size(canvas_size_x, canvas_size_y, P3D);
   smooth();
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-  
-  
   keyimg = loadImage("data/keybindings.jpg");
   //printArray(PFont.list());
   f = createFont("arial.ttf", 12);
@@ -164,17 +164,18 @@ void draw() {
     println("State=2, Setup squiggles");
     loop();
     setup_squiggles();
-    
     reduce_palette();
     startTime = millis();
     break;
   case 3: 
-    //println("State=3, Drawing image");
+  
+    println("State=3, Drawing image");
     if (display_line_count <= 1) {
       background(255);
     } 
     genpath.find_path();
     display_line_count = d1.line_count;
+
     break;
   case 4: 
     println("State=4, pfm.post_processing");
@@ -196,6 +197,8 @@ void draw() {
     render_all();
     noLoop();
     draw_reduced();
+    outfilename = "svg\\complete_" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
+    save_screenshot();
     break;
   default:
     println("invalid state: " + state);
@@ -227,10 +230,7 @@ void setup_squiggles() {
   float   screen_scale_x;
   float   screen_scale_y;
 
-  //println("setup_squiggles...");
-
   d1.line_count = 0;
-  //randomSeed(millis());
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
 
   code_comment("loaded image: " + path_selected);
@@ -267,12 +267,6 @@ void setup_squiggles() {
   code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2));
   code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2));
   code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2));
-  //code_comment("gcode_scale X:  " + nf(gcode_scale_x,0,2));
-  //code_comment("gcode_scale Y:  " + nf(gcode_scale_y,0,2));
-  //code_comment("gcode_scale:    " + nf(gcode_scale,0,2));
-  //code_comment("screen_scale X: " + nf(screen_scale_x,0,2));
-  //code_comment("screen_scale Y: " + nf(screen_scale_y,0,2));
-  //code_comment("screen_scale:   " + nf(screen_scale,0,2));
   genpath.output_parameters();
 
   state++;
@@ -283,25 +277,23 @@ void render_all() {
   println("render_all: " + display_mode + ", " + display_line_count + " lines, with pen set " + current_copic_set);
   
   if (display_mode == "drawing") {
-    //<d1.render_all();
     d1.render_some(display_line_count);
   }
 
   if (display_mode == "pen") {
-    //image(img, 0, 0);
     d1.render_one_pen(display_line_count, pen_selected);
   }
   
   if (display_mode == "original") {
-    image(img_orginal, 0, 0);
+    image(img_orginal, 0, 0, image_size_x, image_size_y);
   }
 
   if (display_mode == "reference") {
-    image(img_reference, 0, 0);
+    image(img_reference, 0, 0, image_size_x, image_size_y);
   }
   
   if (display_mode == "lightened") {
-    image(img, 0, 0);
+    image(img, 0, 0, image_size_x, image_size_y);
   }
   grid();
 }
@@ -366,7 +358,7 @@ void keyPressed() {
   if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
   if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
-  if (key == 's') { if (state == 3) { state++; } }
+  if (key == 's') { save_screenshot(); }
 
   if (key == '9') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
@@ -520,20 +512,6 @@ public void loadInClass(String pfm_name){
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-/*void mousePressed() {
-  morgx = mouseX - mx; 
-  morgy = mouseY - my; 
-  //mouse_point();
-}*/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-/*void mouseDragged() {
-  mx = mouseX-morgx; 
-  my = mouseY-morgy; 
-  redraw();
-}*/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 // This is the pfm interface, it contains the only methods the main code can call.
 // As well as any variables that all pfm modules must have.
 interface pfm {
@@ -555,11 +533,7 @@ void draw_reduced(){
   println("Drawing image");
   if(img.width > img.height){
     println("Image rotated");
-    //image(qimg.getImage(), canvas_size_x-20-img_reference.height/refscale, 10);
-    //image(small_img_reference, canvas_size_x-20-img_reference.height/refscale, 280);
   }else{
-    //image(qimg.getImage(), canvas_size_x-20-img_reference.width/refscale, 10);
-    //image(small_img_reference, canvas_size_x-20-img_reference.width/refscale, 280);
   }
   
   int[] col = qimg.getColorTable();

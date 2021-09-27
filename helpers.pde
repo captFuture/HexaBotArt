@@ -17,6 +17,7 @@ class ChildApplet extends PApplet {
   public void draw() {
     background(255);
     image(keyimg, 0, 0);
+    
   }
   
   
@@ -54,16 +55,6 @@ void grid() {
     int image_center_y = int(img.height / 2);
     int gridlines = 100;
     
-    // Give everything outside the paper area a light grey color
-    noStroke();
-    fill(0, 0, 0, 32);
-    float border_x = (paper_size_x - image_size_x) / 2;
-    float border_y = (paper_size_y - image_size_y) / 2;
-    rect(-border_x/gcode_scale, -border_y/gcode_scale, 999999, -999999);
-    rect((image_size_x+border_x)/gcode_scale, -border_y/gcode_scale, 999999, 999999);
-    rect((image_size_x+border_x)/gcode_scale, (image_size_y+border_y)/gcode_scale, -999999, 999999);
-    rect(-border_x/gcode_scale, (image_size_y+border_y)/gcode_scale, -999999, -999999);
-
     // Vertical lines
     strokeWeight(1);
     stroke(255, 64, 64, 80);
@@ -91,7 +82,7 @@ void grid() {
     // Mark the edge of the drawing/image area in blue
     stroke(64, 64, 255, 92);
     noFill();
-    strokeWeight(2);
+    strokeWeight(1);
     rect(0, 0, img.width, img.height);
             
     // Green pen origin (home position) dot.
@@ -110,5 +101,6 @@ void grid() {
     ellipse(0, 0, 10, 10);
 
     hint(ENABLE_DEPTH_TEST);
+    strokeWeight(1);
   }
 }
