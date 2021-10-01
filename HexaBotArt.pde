@@ -169,7 +169,7 @@ void draw() {
     break;
   case 3: 
   
-    println("State=3, Drawing image");
+    //println("State=3, Drawing image");
     if (display_line_count <= 1) {
       background(255);
     } 
