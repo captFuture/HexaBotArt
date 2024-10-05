@@ -54,7 +54,7 @@ void create_svg_file(int line_count) {
     String gname = "svg\\complete_" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".svg";
     OUTPUT = createWriter(sketchPath("") + gname);
     
-    String buf = "<svg  width=\""+int(paper_size_x)+"\" height=\""+int(paper_size_y)+"\" xmlns=\"http :/ /www.w3.org/2000/svg\">";
+    String buf = "<svg  width=\""+int(paper_size_x)+"\" height=\""+int(paper_size_y)+"\" xmlns=\"http://www.w3.org/2000/svg\">";
     OUTPUT.println(buf);
     
     d1.set_pen_continuation_flags();
@@ -64,7 +64,7 @@ void create_svg_file(int line_count) {
         OUTPUT.println("<!-- Code for Pen " + copic_sets[current_copic_set][p] + " -->");
         
         
-        for (inti = 1; i < line_count; i++) { 
+        for (int i = 1; i < line_count; i++) { 
            if (d1.lines[i].pen_number == p) {
                 
                 float gcode_scaled_x1 = d1.lines[i].x1 * gcode_scale;
@@ -121,7 +121,7 @@ void create_svg_file(int line_count) {
                 
             }
                 
-                OUTPUT.println("</ svg>");
+                OUTPUT.println("</svg>");
                 OUTPUT.flush();
                 OUTPUT.close();
                 println("SVG created :  " + gname);

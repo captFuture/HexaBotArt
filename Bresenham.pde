@@ -27,7 +27,7 @@ ArrayList <intPoint> bresenham(int x0, int y0, int x1, int y1) {
     while(true) {
         pnts.add(new intPoint(x0, y0));
         if ((x0 == x1) && (y0 == y1)) {
-            returnpnts;
+            return pnts;
         }
         e2 =2 * err;
         if (e2 > - dy) {

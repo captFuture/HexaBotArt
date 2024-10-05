@@ -4,9 +4,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void gcode_header() {
-    OUTPUT.println("G28");
+    OUTPUT.println("G28 X Y");
     OUTPUT.println("G21");
     OUTPUT.println("G90");
+    OUTPUT.println("");
+    OUTPUT.println(";(Draw border)");
+    OUTPUT.println("M280 P0 S"+penup+" T"+ servospeed);
+    OUTPUT.println("G0 X-"+image_size_x/2+" Y"+image_size_y/2+" F3000.0");
+    OUTPUT.println("M280 P0 S"+pendown+" T"+ servospeed);
+    OUTPUT.println("G1 X"+image_size_x/2+" Y"+image_size_y/2+"");
+    OUTPUT.println("G1 X"+image_size_x/2+" Y-"+image_size_y/2+"");
+    OUTPUT.println("G1 X-"+image_size_x/2+" Y-"+image_size_y/2+"");
+    OUTPUT.println("G1 X-"+image_size_x/2+" Y"+image_size_y/2+"");
+    OUTPUT.println("M280 P0 S75 T1");
+    OUTPUT.println("");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +29,7 @@ void gcode_trailer() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void gcode_comment(String comment) {
-    code_comments += ("(" + comment + ")") + "\n";
+    code_comments += (";(" + comment + ")") + "\n";
     println(comment);
 }
 
@@ -52,7 +63,7 @@ void create_gcode_files(int line_count) {
         
         OUTPUT = createWriter(sketchPath("") + gname);
         
-          String buf = "";
+        String buf = "";
         OUTPUT.println(buf);
         
         OUTPUT.println(code_comments);
@@ -86,15 +97,15 @@ void create_gcode_files(int line_count) {
                     y = gcode_scaled_y1;
                     pen_movement = pen_movement + distance;
                     pen_lifts++;
-                    OUTPUT.println("(Penup)");
+                    OUTPUT.println(";(Penup)");
                     OUTPUT.println("M280 P0 S" + penup + " T" + servospeed);
                 }
                 
                 if (d1.lines[i].pen_down) {
                    if (is_pen_down == false) {
                         //penupmoves
-                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y));
-                        OUTPUT.println("(Pendown)");
+                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y) + " F3000.0");
+                        OUTPUT.println(";(Pendown)");
                         OUTPUT.println("M280 P0 S" + pendown + " T" + servospeed);
                         is_pen_down = true;
                 }
@@ -103,7 +114,7 @@ void create_gcode_files(int line_count) {
             } else {
                    if (is_pen_down == true) {
                         //somemoves
-                        OUTPUT.println("(Penup)");
+                        OUTPUT.println(";(Penup)");
                         OUTPUT.println("M280 P0 S" + penup + " T" + servospeed);
                  		      //color c = copic.get_original_color(copic_sets[current_copic_set][p]);
                         //OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
@@ -114,7 +125,7 @@ void create_gcode_files(int line_count) {
                 }
                 if (is_pen_down == true) {
                     //pendown moves
-                   buf =  "G1X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
+                   buf =  "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
                     OUTPUT.println(buf);
                     
                 }
@@ -130,8 +141,8 @@ void create_gcode_files(int line_count) {
             OUTPUT.println("");
         }
         gcode_trailer();
-        OUTPUT.println("(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
-        OUTPUT.println("(Drawing coordinates- xmin: " + xmin + " xmax: " + xmax + " ymin: " + ymin + " ymax: " + ymax + " )");
+        OUTPUT.println(";(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
+        OUTPUT.println(";(Drawing coordinates- xmin: " + xmin + " xmax: " + xmax + " ymin: " + ymin + " ymax: " + ymax + " )");
         
         
         
@@ -183,7 +194,7 @@ void create_gcode_file(int line_count) {
     d1.set_pen_continuation_flags();
     
     for (int p = pen_count - 1; p >=  0; p--) {    
-        OUTPUT.println("(Code for Pen " + copic_sets[current_copic_set][p] + ")");
+        OUTPUT.println(";(Code for Pen " + copic_sets[current_copic_set][p] + ")");
         
         OUTPUT.println("M300 S2093 P200");
         // Penup movement and waiting for user input (changing pen)
@@ -218,15 +229,15 @@ void create_gcode_file(int line_count) {
                     y = gcode_scaled_y1;
                     pen_movement = pen_movement + distance;
                     pen_lifts++;
-                    OUTPUT.println("(Penup)");
+                    OUTPUT.println(";(Penup)");
                     OUTPUT.println("M280 P0 S" + penup + " T" + servospeed);
                 }
                 
                 if (d1.lines[i].pen_down) {
                    if (is_pen_down == false) {
                         //penupmoves
-                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y));
-                        OUTPUT.println("(Pendown)");
+                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y) + " F3000.0");
+                        OUTPUT.println(";(Pendown)");
                         OUTPUT.println("M280 P0 S" + pendown + " T" + servospeed);
                         is_pen_down = true;
                 }
@@ -235,7 +246,7 @@ void create_gcode_file(int line_count) {
             } else {
                    if (is_pen_down == true) {
                         //somemoves
-                        OUTPUT.println("(Penup)");
+                        OUTPUT.println(";(Penup)");
                         OUTPUT.println("M280 P0 S" + penup + " T" + servospeed);
                  		      //color c = copic.get_original_color(copic_sets[current_copic_set][p]);
                         //OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
@@ -246,7 +257,7 @@ void create_gcode_file(int line_count) {
                 }
                 if (is_pen_down == true) {
                     //pendown moves
-                   buf =  "G1X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
+                   buf =  "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
                     OUTPUT.println(buf);
                     
                 }
@@ -265,8 +276,8 @@ void create_gcode_file(int line_count) {
 }
     
     gcode_trailer();
-    OUTPUT.println("(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
-    OUTPUT.println("(Drawing coordinates- xmin: " + xmin + " xmax: " + xmax + " ymin: " + ymin + " ymax: " + ymax + " )");
+    OUTPUT.println(";(Drew " + lines_drawn + " lines for " + pen_drawing  / 25.4 / 12 + " feet)");
+    OUTPUT.println(";(Drawing coordinates- xmin: " + xmin + " xmax: " + xmax + " ymin: " + ymin + " ymax: " + ymax + " )");
     
     OUTPUT.flush();
     OUTPUT.close();

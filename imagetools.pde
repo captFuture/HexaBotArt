@@ -407,7 +407,7 @@ float[][] scale_matrix(float[][] matrix, int scale) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < p; j++) {
             for (int si = 0; si < scale; si++) {
-                for (intsj = 0; sj < scale; sj++) {
+                for (int sj = 0; sj < scale; sj++) {
                     //println(si, sj);
                    int a1 = (i * scale) + si;
                    int a2 = (j * scale) + sj;
@@ -444,6 +444,6 @@ void print_matrix(float[][] matrix) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void save_screenshot() {
-    code_comment("save Screenshot");
+    //code_comment("save Screenshot");
     saveFrame(outfilename);
 }

@@ -9,7 +9,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 
+import controlP5.*;
+ControlP5 cp5;
+
+boolean blurToggle = false;
+
 ChildApplet child;
+ChildApplet2 child2;
 PImage keyimg;
 QImage qimg;
 PFont f;
@@ -112,7 +118,8 @@ String[][] copic_sets = {
   {"R37", "YR04", "Y15", "G07", "B29", "BV08"}, // 20 Primary
   {"YG99", "Y17", "YG03", "Y11", "N3", "N2"},    // 21 Nature
   {"100", "B39", "V09", "B02", "V04", "V04" },   // 22 Light Purples
-  {"100", "B39", "B26", "B14", "BG07", "BG15"}   // 23 Turquoise
+  {"100", "B39", "B26", "B14", "BG07", "BG15"},  // 23 Turquoise
+  {"V09", "B29", "G17", "Y13", "YR04", "R08"}   // 24 LGTBQ
 };
 
 String outfilename = "";
@@ -126,6 +133,8 @@ void settings(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  
+  
   keyimg = loadImage("data/keybindings.jpg");
   //printArray(PFont.list());
   f = createFont("arial.ttf", 12);
@@ -137,6 +146,23 @@ void setup() {
   frameRate(999);
 
   child = new ChildApplet();
+  
+  /*
+  child2 = new ChildApplet2();
+  cp5 = new ControlP5(child2);
+  
+  cp5.addTextfield("ImageBlur")
+     .setPosition(10, 20)
+     .setSize(80, 20)
+     .setId(1);
+     
+  // create a toggle
+  cp5.addToggle("ImageBlur")
+     .setPosition(100,20)
+     .setSize(50,20)
+     .setValue(true)
+     .setMode(ControlP5.SWITCH)
+  ;*/ 
 
   randomSeed(3);
   d1 = new botDrawing();

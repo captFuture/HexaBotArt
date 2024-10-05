@@ -1,32 +1,48 @@
 class ChildApplet extends PApplet {
-    //JFrame frame;
-    
+  
     public ChildApplet() {
         super();
         PApplet.runSketch(new String[]{this.getClass().getName()} , this);
-}
+    }
     
     public void settings() {
         size(360, 900, P3D);
         smooth();
-}
+        
+    }
     public void setup() { 
         surface.setTitle("Key table");
-}
+    }
     
     public void draw() {
         background(255);
         image(keyimg, 0, 0);
         
+    }
+    
 }
+
+class ChildApplet2 extends PApplet {
+
+    public ChildApplet2() {
+        super();
+        PApplet.runSketch(new String[]{this.getClass().getName()} , this);
+    }
     
+    public void settings() {
+        size(360, 360, P3D);
+        smooth();
+    }
     
-    void slider_pen_count(int value) {
-        
-        println("a slider value changed");
-        
-}
+    public void setup() { 
+        surface.setTitle("Settings");
+    }
     
+    public void draw() {
+        background(255);
+        //image(keyimg, 0, 0);
+    }
+      
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
