@@ -223,7 +223,7 @@ void draw() {
     render_all();
     noLoop();
     draw_reduced();
-    outfilename = "svg\\complete_" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
+    outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
     save_screenshot();
     break;
   default:
@@ -356,35 +356,21 @@ void keyPressed() {
   if (keyCode == 57 && ctrl_down && pen_count > 8) { display_mode = "pen";  pen_selected = 8; }  // ctrl 9
   if (keyCode == 48 && ctrl_down && pen_count > 9) { display_mode = "pen";  pen_selected = 9; }  // ctrl 0
   if (key == 'G') { is_grid_on = ! is_grid_on; }
-  if (key == ']') { screen_scale *= 1.05; }
-  if (key == '[') { screen_scale *= 1 / 1.05; }
+
   if (key == '1' && pen_count > 0) { pen_distribution[0] *= 1.1; }
   if (key == '2' && pen_count > 1) { pen_distribution[1] *= 1.1; }
   if (key == '3' && pen_count > 2) { pen_distribution[2] *= 1.1; }
   if (key == '4' && pen_count > 3) { pen_distribution[3] *= 1.1; }
   if (key == '5' && pen_count > 4) { pen_distribution[4] *= 1.1; }
   if (key == '6' && pen_count > 5) { pen_distribution[5] *= 1.1; }
-  if (key == '7' && pen_count > 6) { pen_distribution[6] *= 1.1; }
-  if (key == '8' && pen_count > 7) { pen_distribution[7] *= 1.1; }
-  if (key == '9' && pen_count > 8) { pen_distribution[8] *= 1.1; }
-  if (key == '0' && pen_count > 9) { pen_distribution[9] *= 1.1; }
-  if (key == '!' && pen_count > 0) { pen_distribution[0] *= 0.9; }
-  if (key == '@' && pen_count > 1) { pen_distribution[1] *= 0.9; }
-  if (key == '#' && pen_count > 2) { pen_distribution[2] *= 0.9; }
-  if (key == '$' && pen_count > 3) { pen_distribution[3] *= 0.9; }
-  if (key == '%' && pen_count > 4) { pen_distribution[4] *= 0.9; }
-  if (key == '^' && pen_count > 5) { pen_distribution[5] *= 0.9; }
-  if (key == '&' && pen_count > 6) { pen_distribution[6] *= 0.9; }
-  if (key == '*' && pen_count > 7) { pen_distribution[7] *= 0.9; }
-  if (key == '(' && pen_count > 8) { pen_distribution[8] *= 0.9; }
-  if (key == ')' && pen_count > 9) { pen_distribution[9] *= 0.9; }
+
   if (key == 't') { set_even_distribution(); }
   if (key == 'y') { set_black_distribution(); }
   //if (key == 'x') { mouse_point(); }  
   if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
   if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
-  if (key == 's') { save_screenshot(); }
+  if (key == 's') {  }
 
   if (key == '9') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
@@ -393,10 +379,6 @@ void keyPressed() {
     if (pen_count > 3) { pen_distribution[3] *= 1.15; }
     if (pen_count > 4) { pen_distribution[4] *= 1.20; }
     if (pen_count > 5) { pen_distribution[5] *= 1.25; }
-    if (pen_count > 6) { pen_distribution[6] *= 1.30; }
-    if (pen_count > 7) { pen_distribution[7] *= 1.35; }
-    if (pen_count > 8) { pen_distribution[8] *= 1.40; }
-    if (pen_count > 9) { pen_distribution[9] *= 1.45; }
   }
   if (key == '0') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
@@ -405,10 +387,6 @@ void keyPressed() {
     if (pen_count > 3) { pen_distribution[3] *= 0.85; }
     if (pen_count > 4) { pen_distribution[4] *= 0.80; }
     if (pen_count > 5) { pen_distribution[5] *= 0.75; }
-    if (pen_count > 6) { pen_distribution[6] *= 0.70; }
-    if (pen_count > 7) { pen_distribution[7] *= 0.65; }
-    if (pen_count > 8) { pen_distribution[8] *= 0.60; }
-    if (pen_count > 9) { pen_distribution[9] *= 0.55; }
 }
   if (key == 'g') { 
     create_svg_file(display_line_count);
@@ -419,7 +397,6 @@ void keyPressed() {
     }
   }
 
-  if (key == '\\') { screen_scale = screen_scale_org; screen_rotate=0; mx=0; my=0; }
   if (key == ',') {
     int delta = -10000;
     display_line_count = int(display_line_count + delta);
@@ -432,13 +409,7 @@ void keyPressed() {
     display_line_count = constrain(display_line_count, 0, d1.line_count);
     //println("display_line_count: " + display_line_count);
   }
-  if (key == CODED) {
-    int delta = 15;
-    if (keyCode == UP)    { my+= delta; };
-    if (keyCode == DOWN)  { my-= delta; };
-    if (keyCode == RIGHT) { mx-= delta; };
-    if (keyCode == LEFT)  { mx+= delta; };
-  }
+
   if (key == 'r') { 
     screen_rotate ++;
     if (screen_rotate == 4) { screen_rotate = 0; }
