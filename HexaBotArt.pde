@@ -2,15 +2,15 @@
 // Fork Based on Drawbot, "Death to Sharpie" from https://github.com/Scott-Cooper/Drawbot_image_to_gcode_v2
 // and https://github.com/jwcliff/Drawbot_image_to_gcode_v2
 //
-// Chris Tarantl, tarantl.com, <profsimon@gmail.com>
+// Chris Tarantl <profsimon@gmail.com>
 //
 // Open creative GPL source commons with some BSD public GNU foundation stuff sprinkled in...
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 
-import controlP5.*;
-ControlP5 cp5;
+//import controlP5.*;
+//ControlP5 cp5;
 
 boolean blurToggle = false;
 
