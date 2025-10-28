@@ -224,7 +224,7 @@ void draw() {
     noLoop();
     draw_reduced();
     outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
-    save_screenshot();
+    save_screenshot(outfilename);
     break;
   default:
     println("invalid state: " + state);
