@@ -118,7 +118,7 @@ void create_svg_file(int line_count) {
       OUTPUT.println("\" style = \"fill:none;stroke:#" + hex(c, 6) + ";stroke-width:" + pen_width + ";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\" /> ");
     }
   }
-  OUTPUT.println("<path d=\"M 0,0 L " + int(image_size_x) + ",0 L " + int(image_size_x) + "," + int(image_size_y) + " L 0," + int(image_size_y) + " Z\" style=\"fill:none;stroke:#000000;stroke-width:" + pen_width + ";stroke-opacity:1\"/>");
+  OUTPUT.println("<path d=\"M 0,0 L " + int(paper_size_x) + ",0 L " + int(paper_size_x) + "," + int(paper_size_y) + " L 0," + int(paper_size_y) + " Z\" style=\"fill:none;stroke:#000000;stroke-width:" + pen_width + ";stroke-opacity:1\"/>");
   OUTPUT.println("</svg>");
   OUTPUT.flush();
   OUTPUT.close();
@@ -212,7 +212,7 @@ void create_svg_files (int line_count) {
       OUTPUT.println("\" style=\"fill : none;stroke : #"+hex(c, 6)+";stroke - width : "+pen_width+";stroke - opacity : 1;stroke - miterlimit : 4;stroke - dasharray : none\"/>");
     }
 
-    OUTPUT.println("<path d=\"M 0,0 L " + int(image_size_x) + ",0 L " + int(image_size_x) + "," + int(image_size_y) + " L 0," + int(image_size_y) + " Z\" style=\"fill:none;stroke:#000000;stroke-width:" + pen_width + ";stroke-opacity:1\"/>");
+    OUTPUT.println("<path d=\"M 0,0 L " + int(paper_size_x) + ",0 L " + int(paper_size_x) + "," + int(paper_size_y) + " L 0," + int(paper_size_y) + " Z\" style=\"fill:none;stroke:#000000;stroke-width:" + pen_width + ";stroke-opacity:1\"/>");
     OUTPUT.println("</svg>");
     OUTPUT.flush();
     OUTPUT.close();

@@ -24,12 +24,20 @@ boolean mousePressedOnParent = false;
 
 // Constants
 final float   image_scale = 1;
-final float   paper_size_y = 594;
-final float   paper_size_x = 420;
-final float   image_size_y = 594 * image_scale; // desired image size...9999
-final float   image_size_x = 420 * image_scale; // desired image size
-final int     canvas_size_y = 768;
-final int     canvas_size_x = 545;
+
+
+// Paper Size (A2 format in mm)
+final float paper_size_y = 594;    // A2 height
+final float paper_size_x = 420;    // A2 width
+
+// Image Size (scaled version of paper size)
+final float image_size_y = 594 * image_scale; 
+final float image_size_x = 420 * image_scale;
+
+// Canvas Size (display window size)
+final int canvas_size_y = 768;     // Window height
+final int canvas_size_x = 545;     // Window width
+
 final int     refscale = 1;                     //sample area
 
 final boolean makelangelo = true;
