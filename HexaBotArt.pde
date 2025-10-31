@@ -22,21 +22,21 @@ PFont f;
 PGraphics pg;
 boolean mousePressedOnParent = false;
 
-// Constants
-final float   image_scale = 1;
-
+// Constants and Unit Conversion
+final float   MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
+final float   image_scale = 1;      // Additional scaling factor for the image
 
 // Paper Size (A2 format in mm)
-final float paper_size_y = 594;    // A2 height
-final float paper_size_x = 420;    // A2 width
+final float   paper_size_y = 594;   // A2 height in mm
+final float   paper_size_x = 420;   // A2 width in mm
 
-// Image Size (scaled version of paper size)
-final float image_size_y = 594 * image_scale; 
-final float image_size_x = 420 * image_scale;
+// Image Size (paper size converted to pixels and scaled)
+final float   image_size_y = paper_size_y * MM_TO_PX * image_scale; 
+final float   image_size_x = paper_size_x * MM_TO_PX * image_scale;
 
 // Canvas Size (display window size)
-final int canvas_size_y = 768;     // Window height
-final int canvas_size_x = 545;     // Window width
+final int     canvas_size_y = 768;  // Window height in px
+final int     canvas_size_x = 545;  // Window width in px
 
 final int     refscale = 1;                     //sample area
 
