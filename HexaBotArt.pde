@@ -60,7 +60,7 @@ final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 fo
 Class cl = null;
 pfm genpath;
 int current_pfm = 0;
-String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
+String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares","PFM_lines"}; 
 
 int     state = 1;
 int     pen_selected = 0;
@@ -135,7 +135,7 @@ String outfilename = "";
 
 void settings(){
   size(canvas_size_x, canvas_size_y, P3D);
-  pixelDensity(2);
+  pixelDensity(1);
   smooth();
 }
 
@@ -232,8 +232,8 @@ void draw() {
     render_all();
     noLoop();
     draw_reduced();
-    outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
-    save_screenshot(outfilename);
+    //outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
+    //save_screenshot(outfilename);
     break;
   default:
     println("invalid state: " + state);
@@ -379,7 +379,11 @@ void keyPressed() {
   if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
   if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
   
-  if (key == 's') {  }
+  if (key == 's') { 
+    outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
+    save_screenshot(outfilename);
+    println("Screenshot saved to: " + outfilename);
+  }
 
   if (key == '9') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
