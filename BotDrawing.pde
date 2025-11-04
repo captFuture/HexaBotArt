@@ -9,27 +9,39 @@ class botDrawing {
   }
 
   void render_last() {
-    lines[line_count].render_with_copic();
+    lines[line_count].render_with_copic(g);
   }
 
   void render_all() {
     for (int i = 1; i < line_count; i++) {
-      lines[i].render_with_copic();
+      lines[i].render_with_copic(g);
     }
   }
 
   void render_some(int line_count) {
     for (int i = 1; i < line_count; i++) {
-      lines[i].render_with_copic();
+      lines[i].render_with_copic(g);
+    }
+  }
+
+  void render_some(PGraphics pg, int line_count) {
+    for (int i = 1; i < line_count; i++) {
+      lines[i].render_with_copic(pg);
     }
   }
 
   void render_one_pen(int line_count, int pen) {
-    color c = color(255, 0, 0);
-
     for (int i = 1; i < line_count; i++) {
       if (lines[i].pen_number == pen) {
-        lines[i].render_with_copic();
+        lines[i].render_with_copic(g);
+      }
+    }
+  }
+
+  void render_one_pen(PGraphics pg, int line_count, int pen) {
+    for (int i = 1; i < line_count; i++) {
+      if (lines[i].pen_number == pen) {
+        lines[i].render_with_copic(pg);
       }
     }
   }

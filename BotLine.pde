@@ -25,16 +25,17 @@ class botLine {
     y2 =y2_;
   }
 
-  void render_with_copic() {
+  void render_with_copic(PGraphics pg) {
     if (pen_down) {
       color c = copic.get_original_color(copic_sets[current_copic_set][pen_number]);
-      stroke(c, 255 - brightness(c));
-      //stroke(c);
-      //strokeWeight(3);
-      //blendMode(BLEND);
-      blendMode(MULTIPLY);
-      line(x1, y1, x2, y2);
+      pg.stroke(c, 255 - brightness(c));
+      pg.blendMode(MULTIPLY);
+      pg.line(x1, y1, x2, y2);
     }
+  }
+
+  void render_with_copic() {
+    render_with_copic(g);
   }
 }
 

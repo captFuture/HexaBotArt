@@ -131,6 +131,7 @@ String[][] copic_sets = {
 };
 
 String outfilename = "";
+boolean shouldSaveScreenshot = false;
 
 
 void settings(){
@@ -142,22 +143,19 @@ void settings(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-  
-  
-  keyimg = loadImage("data/keybindings.jpg");
-  //printArray(PFont.list());
+  surface.setTitle("Drawbot - SVG creator");
+  //surface.setResizable(true);
+  //surface.setLocation(100, 100);
+
   f = createFont("arial.ttf", 12);
   textFont(f);
-    
-  surface.setTitle("Drawbot - SVG creator");
-  
+
   colorMode(RGB);
   frameRate(999);
-
   child = new ChildApplet();
-  
-  /*
   child2 = new ChildApplet2();
+  /*
+  
   cp5 = new ControlP5(child2);
   
   cp5.addTextfield("ImageBlur")
@@ -186,6 +184,13 @@ void setup() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void draw() {
+  if (shouldSaveScreenshot) {
+    saveFrame(outfilename);
+    println("Screenshot saved to: " + outfilename);
+    shouldSaveScreenshot = false;
+    return;
+  }
+
   if (state != 3) { background(255, 255, 255); }
   scale(screen_scale);
   translate(mx, my);
@@ -203,14 +208,12 @@ void draw() {
     startTime = millis();
     break;
   case 3: 
-  
     //println("State=3, Drawing image");
     if (display_line_count <= 1) {
       background(255);
     } 
     genpath.find_path();
     display_line_count = d1.line_count;
-
     break;
   case 4: 
     println("State=4, pfm.post_processing");
@@ -230,10 +233,8 @@ void draw() {
     break;
   case 5: 
     render_all();
-    noLoop();
     draw_reduced();
-    //outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
-    //save_screenshot(outfilename);
+    noLoop();
     break;
   default:
     println("invalid state: " + state);
@@ -381,8 +382,8 @@ void keyPressed() {
   
   if (key == 's') { 
     outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
-    save_screenshot(outfilename);
-    println("Screenshot saved to: " + outfilename);
+    shouldSaveScreenshot = true;
+    redraw(); // Request a single redraw instead of restarting the loop
   }
 
   if (key == '9') {
