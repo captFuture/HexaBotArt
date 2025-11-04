@@ -135,7 +135,7 @@ String outfilename = "";
 
 void settings(){
   size(canvas_size_x, canvas_size_y, P3D);
-  pixelDensity(1);
+  pixelDensity(2);
   smooth();
 }
 
@@ -149,7 +149,7 @@ void setup() {
   f = createFont("arial.ttf", 12);
   textFont(f);
     
-  surface.setTitle("Drewie - SVG creator");
+  surface.setTitle("Drawbot - SVG creator");
   
   colorMode(RGB);
   frameRate(999);

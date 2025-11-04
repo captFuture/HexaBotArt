@@ -1,22 +1,104 @@
 class ChildApplet extends PApplet { // Key table window
+  float margin = 10;
+  float columnSpacing = 100;
+  float rowHeight = 20;
+  float headerHeight = 10;
+  
+  // Add bindings array as class variable
+  String[][] bindings = {
+    {"p", "Load next 'Path Finding Module' (PFM)"},
+    {"r", "Rotate drawing"},
+    {"O", "Display original image (capital letter)"},
+    {"o", "Display image to be drawn after pre-processing (lower case letter)"},
+    {"l", "Display image after the path finding module has manipulated it"},
+    {"d", "Display drawing with all pens"},
+    {"<ctrl> 1", "Display drawing, pen 0 only"},
+    {"<ctrl> 2", "Display drawing, pen 1 only"},
+    {"<ctrl> 3", "Display drawing, pen 2 only"},
+    {"<ctrl> 4", "Display drawing, pen 3 only"},
+    {"<ctrl> 5", "Display drawing, pen 4 only"},
+    {"<ctrl> 6", "Display drawing, pen 5 only"},
+    {"S", "Stop path finding prematurely"},
+    {"Esc", "Exit running program"},
+    {",", "Decrease the total number of lines drawn"},
+    {".", "Increase the total number of lines drawn"},
+    {"g", "Generate all SVGs with lines as displayed"},
+    {"G", "Toggle grid"},
+    {"t", "Redistribute percentage of lines drawn by each pen evenly"},
+    {"y", "Redistribute 100% of lines drawn to pen 0"},
+    {"9", "Change distribution of lines drawn (lighten)"},
+    {"0", "Change distribution of lines drawn (darken)"},
+    {"1", "Increase percentage of lines drawn by pen 0"},
+    {"2", "Increase percentage of lines drawn by pen 1"},
+    {"3", "Increase percentage of lines drawn by pen 2"},
+    {"4", "Increase percentage of lines drawn by pen 3"},
+    {"5", "Increase percentage of lines drawn by pen 4"},
+    {"6", "Increase percentage of lines drawn by pen 5"},
+    {"shift 0", "Decrease percentage of lines drawn by pen 0"},
+    {"shift 1", "Decrease percentage of lines drawn by pen 1"},
+    {"shift 2", "Decrease percentage of lines drawn by pen 2"},
+    {"shift 3", "Decrease percentage of lines drawn by pen 3"},
+    {"shift 4", "Decrease percentage of lines drawn by pen 4"},
+    {"shift 5", "Decrease percentage of lines drawn by pen 5"}
+  };
+
 
   public ChildApplet() {
     super();
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
 
-  public void settings() {
-    size(360, 900, P3D);
-    smooth();
-  }
-  public void setup() {
-    surface.setTitle("Key table");
+  void settings() {
+    size(500, 800, P2D);
+    
   }
 
-  public void draw() {
-    background(255);
-    image(keyimg, 0, 0);
+  void setup() {
+    surface.setTitle("Key Controls");
+    surface.setResizable(true);
+    background(240);
+    createKeyBindingsTable();
   }
+
+  void draw() {
+    background(240);
+    createKeyBindingsTable();
+  }
+
+  void createKeyBindingsTable() {
+    fill(0);
+    textAlign(LEFT);
+    textSize(12);
+    fill(100);
+    float visibleRows = (height - headerHeight) / rowHeight;
+    
+    for (int i = 0; i < bindings.length; i++) {
+      float y = headerHeight + 30 + (i * rowHeight);
+      
+      // Only draw rows that are visible in the window
+      if (y < height) {
+        // alternating row background: even = white, odd = light grey
+        noStroke();
+        if (i % 2 == 0) {
+          fill(255);          // white
+        } else {
+          fill(230);          // light grey
+        }
+        // draw full-width stripe behind the row (adjust vertical position to cover text)
+        float rectY = y - rowHeight + 6;
+        rect(0, rectY, width, rowHeight);
+
+        // draw the text on top
+        fill(0);
+        text(bindings[i][0], margin, y);
+        
+        // Wrap text for long descriptions
+        float wrapWidth = width - (margin + columnSpacing + margin);
+        text(bindings[i][1], margin + columnSpacing, y);
+      }
+    }
+  }
+
 }
 
 class ChildApplet2 extends PApplet { // Settings window
