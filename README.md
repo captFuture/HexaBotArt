@@ -31,6 +31,7 @@ The code was intended to be heavily modified to generate different and unique dr
 | , | Decrease the total number of lines drawn |
 | . | Increase the total number of lines drawn |
 | g | Generate all SVGs with lines as displayed |
+| s | Save PNG image of displayed window content |
 | G | Toggle grid |
 | t | Redistribute percentage of lines drawn by each pen evenly |
 | y | Redistribute 100% of lines drawn to pen 0 |

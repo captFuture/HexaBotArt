@@ -9,18 +9,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 
-//import controlP5.*;
-//ControlP5 cp5;
-
-boolean blurToggle = false;
-
 ChildApplet child;
-ChildApplet2 child2;
 PImage keyimg;
 QImage qimg;
 PFont f;
 PGraphics pg;
-boolean mousePressedOnParent = false;
 
 // Constants and Unit Conversion
 final float   MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
@@ -153,24 +146,6 @@ void setup() {
   colorMode(RGB);
   frameRate(999);
   child = new ChildApplet();
-  child2 = new ChildApplet2();
-  /*
-  
-  cp5 = new ControlP5(child2);
-  
-  cp5.addTextfield("ImageBlur")
-     .setPosition(10, 20)
-     .setSize(80, 20)
-     .setId(1);
-     
-  // create a toggle
-  cp5.addToggle("ImageBlur")
-     .setPosition(100,20)
-     .setSize(50,20)
-     .setValue(true)
-     .setMode(ControlP5.SWITCH)
-  ;*/ 
-
   randomSeed(3);
   d1 = new botDrawing();
   dx = new Limit(); 
@@ -544,18 +519,9 @@ void draw_reduced(){
   println("Drawing image");
   if(img.width > img.height){
     println("Image rotated");
-  }else{
   }
   
   int[] col = qimg.getColorTable();
-  
-  for (int id = 0; id < 15; id++) {
-    //print("Red: "+red(col[id]));
-    //print(" Green: "+green(col[id]));
-    //print(" Blue: "+blue(col[id]));
-    //println();
-  }
-  
 }
 
 /**

@@ -12,6 +12,7 @@ class ChildApplet extends PApplet { // Key table window
     {",", "Decrease the total number of lines drawn"},
     {".", "Increase the total number of lines drawn"},
     {"g", "Generate all SVGs with lines as displayed"},
+    {"s", "Generate PNG screenshot of current display"},
     {"G", "Toggle grid"},
     {"-----------------", "---------------------------------------------------"},
     {"r", "Rotate drawing"},
@@ -102,28 +103,6 @@ class ChildApplet extends PApplet { // Key table window
     }
   }
 
-}
-
-class ChildApplet2 extends PApplet { // Settings window
-
-  public ChildApplet2() {
-    super();
-    PApplet.runSketch(new String[]{this.getClass().getName()}, this);
-  }
-
-  public void settings() {
-    size(360, 360, P3D);
-    smooth();
-  }
-
-  public void setup() {
-    surface.setTitle("Settings");
-  }
-
-  public void draw() {
-    background(255);
-    //image(keyimg, 0, 0);
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
