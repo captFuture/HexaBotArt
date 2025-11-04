@@ -135,6 +135,7 @@ String outfilename = "";
 
 void settings(){
   size(canvas_size_x, canvas_size_y, P3D);
+  pixelDensity(1);
   smooth();
 }
 
