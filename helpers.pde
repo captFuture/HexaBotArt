@@ -130,7 +130,7 @@ void grid() {
   //Some screen scales smaller than 1.0 will sometimes display every other line
   //It looks like a big logic bug, but it just can't display a one pixel line scaled down well.
 
-  //blendMode(BLEND);
+  blendMode(BLEND);
   if (is_grid_on) {
     int image_center_x = int(img.width / 2);
     int image_center_y = int(img.height / 2);

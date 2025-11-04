@@ -15,40 +15,8 @@ QImage qimg;
 PFont f;
 PGraphics pg;
 
-// Constants and Unit Conversion
-final float   MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
-final float   image_scale = 1;      // Additional scaling factor for the image
-
-// Paper Size (A2 format in mm)
-final float   paper_size_y = 594;   // A2 height in mm
-final float   paper_size_x = 420;   // A2 width in mm
-
-// Image Size (paper size converted to pixels and scaled)
-final float   image_size_y = paper_size_y * MM_TO_PX * image_scale; 
-final float   image_size_x = paper_size_x * MM_TO_PX * image_scale;
-
-// Canvas Size (display window size)
-final int     canvas_size_y = 768;  // Window height in px
-final int     canvas_size_x = 545;  // Window width in px
-
-final int     refscale = 1;                     //sample area
-
-final boolean makelangelo = true;
-final int     penup = 75;
-final int     pendown = 20;
-final int     servospeed = 1;
-
-final float   paper_top_to_origin = 0;  //mm
-final float   pen_width = 1;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
-
-//SET THIS
-int           pen_count = 6;                //up to 6 pens
-int           current_copic_set = 15;
-
-final char    gcode_decimal_seperator = '.';    
-final int     gcode_decimals = 0;             // Number of digits right of the decimal point in the gcode files.
-final int     svg_decimals = 0;               // Number of digits right of the decimal point in the SVG file.
-final float   grid_scale = 10;              // Use 10.0 for centimeters, 25.4 for inches, and between 444 and 529.2 for cubits.
+// Configuration is now stored in `config.pde` in the sketch folder.
+// Edit `config.pde` to change paper size, scales, pen counts and related settings.
 
 Class cl = null;
 pfm genpath;
@@ -92,7 +60,7 @@ Copix   copic;
 PrintWriter OUTPUT;
 botDrawing d1;
 
-float[] pen_distribution = new float[pen_count];
+float[] pen_distribution;
 
 // use Copic.pde to get colors of pens and generate your own color scheme
 String[][] copic_sets = {
@@ -139,7 +107,6 @@ void setup() {
   surface.setTitle("Drawbot - SVG creator");
   //surface.setResizable(true);
   //surface.setLocation(100, 100);
-
   f = createFont("arial.ttf", 12);
   textFont(f);
 
@@ -151,6 +118,8 @@ void setup() {
   dx = new Limit(); 
   dy = new Limit(); 
   copic = new Copix();
+  // allocate pen distribution using configured pen_count
+  pen_distribution = new float[pen_count];
   loadInClass(pfms[current_pfm]);
   selectInput("Select an image to process:", "fileSelected");
 
