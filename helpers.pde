@@ -7,17 +7,16 @@ class ChildApplet extends PApplet { // Key table window
   // Add bindings array as class variable
   String[][] bindings = {
     {"p", "Load next 'Path Finding Module' (PFM)"},
-    {";", "Use previous pen set"},
-    {":", "Use next pen set"},
+    {"q", "Use previous pen set"},
+    {"w", "Use next pen set"},
     {",", "Decrease the total number of lines drawn"},
     {".", "Increase the total number of lines drawn"},
-    {"g", "Generate all SVGs with lines as displayed"},
-    {"s", "Generate PNG screenshot of current display"},
+    {"s", "Generate SVG and PNG of current display"},
     {"G", "Toggle grid"},
     {"-----------------", "---------------------------------------------------"},
-    {"r", "Rotate drawing"},
-    {"O", "Display original image (capital letter)"},
-    {"o", "Display image to be drawn after pre-processing (lower case letter)"},
+    //{"r", "Rotate drawing"},
+    {"o", "Display original image"},
+    {"i", "Display image to be drawn after pre-processing"},
     {"l", "Display image after the path finding module has manipulated it"},
     {"d", "Display drawing with all pens"},
     {"<ctrl> 1", "Display drawing, pen 0 only"},
@@ -30,20 +29,22 @@ class ChildApplet extends PApplet { // Key table window
     {"Esc", "Exit running program"},
     {"t", "Redistribute percentage of lines drawn by each pen evenly"},
     {"y", "Redistribute 100% of lines drawn to pen 0"},
-    {"9", "Change distribution of lines drawn (lighten)"},
-    {"0", "Change distribution of lines drawn (darken)"},
-    {"1", "Increase percentage of lines drawn by pen 0"},
-    {"2", "Increase percentage of lines drawn by pen 1"},
-    {"3", "Increase percentage of lines drawn by pen 2"},
-    {"4", "Increase percentage of lines drawn by pen 3"},
-    {"5", "Increase percentage of lines drawn by pen 4"},
-    {"6", "Increase percentage of lines drawn by pen 5"},
-    {"shift 0", "Decrease percentage of lines drawn by pen 0"},
+    {"n", "Change distribution of lines drawn (lighten)"},
+    {"m", "Change distribution of lines drawn (darken)"},
+    
+    {"1", "Increase percentage of lines drawn by pen 1"},
+    {"2", "Increase percentage of lines drawn by pen 2"},
+    {"3", "Increase percentage of lines drawn by pen 3"},
+    {"4", "Increase percentage of lines drawn by pen 4"},
+    {"5", "Increase percentage of lines drawn by pen 5"},
+    {"6", "Increase percentage of lines drawn by pen 6"},
+
     {"shift 1", "Decrease percentage of lines drawn by pen 1"},
     {"shift 2", "Decrease percentage of lines drawn by pen 2"},
     {"shift 3", "Decrease percentage of lines drawn by pen 3"},
     {"shift 4", "Decrease percentage of lines drawn by pen 4"},
-    {"shift 5", "Decrease percentage of lines drawn by pen 5"}
+    {"shift 5", "Decrease percentage of lines drawn by pen 5"},
+    {"shift 6", "Decrease percentage of lines drawn by pen 6"}
   };
 
 

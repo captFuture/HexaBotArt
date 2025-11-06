@@ -36,8 +36,8 @@ PImage  small_img_reference;
 float   gcode_offset_x;
 float   gcode_offset_y;
 float   gcode_scale;
-float   screen_scale;
-float   screen_scale_org;
+float   canvas_scale;
+float   canvas_scale_org;
 int     screen_rotate = 0;
 float   old_x = 0;
 float   old_y = 0;
@@ -136,7 +136,7 @@ void draw() {
   }
 
   if (state != 3) { background(255, 255, 255); }
-  scale(screen_scale);
+  scale(canvas_scale);
   translate(mx, my);
   rotate(HALF_PI*screen_rotate);
   
@@ -207,16 +207,13 @@ void fileSelected(File selection) {
 void setup_squiggles() {
   float   gcode_scale_x;
   float   gcode_scale_y;
-  float   screen_scale_x;
-  float   screen_scale_y;
+  float   canvas_scale_x;
+  float   canvas_scale_y;
 
   d1.line_count = 0;
   img = loadImage(path_selected, "jpeg");  // Load the image into the program  
-
   code_comment("loaded image: " + path_selected);
-
-  image_rotate();
-
+  //image_rotate();
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
 
@@ -238,15 +235,15 @@ void setup_squiggles() {
   gcode_offset_x = - (paper_size_x / 2.0);  
   gcode_offset_y = - (paper_size_y / 2.0);
 
-  screen_scale_x = width / (float)img.width;
-  screen_scale_y = height / (float)img.height;
-  screen_scale = min(screen_scale_x, screen_scale_y);
-  screen_scale_org = screen_scale;
+  canvas_scale_x = width / (float)img.width;
+  canvas_scale_y = height / (float)img.height;
+  canvas_scale = min(canvas_scale_x, canvas_scale_y);
+  canvas_scale_org = canvas_scale;
   
-  code_comment("final dimensions: " + img.width + " by " + img.height);
+  code_comment("final baseimage dimensions: " + img.width + " by " + img.height);
   code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2));
-  code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2));
-  code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2));
+  //code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2));
+  //code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2));
   genpath.output_parameters();
 
   state++;
@@ -256,23 +253,23 @@ void setup_squiggles() {
 void render_all() {
   println("render_all: " + display_mode + ", " + display_line_count + " lines, with pen set " + current_copic_set);
   
-  if (display_mode == "drawing") {
+  if (display_mode == "drawing") { // complete drawing
     d1.render_some(display_line_count);
   }
 
-  if (display_mode == "pen") {
+  if (display_mode == "pen") { // single pen
     d1.render_one_pen(display_line_count, pen_selected);
   }
   
-  if (display_mode == "original") {
+  if (display_mode == "original") { // original image
     image(img_orginal, 0, 0, image_size_x, image_size_y);
   }
 
-  if (display_mode == "reference") {
+  if (display_mode == "reference") { // after pre_processing
     image(img_reference, 0, 0, image_size_x, image_size_y);
   }
   
-  if (display_mode == "lightened") {
+  if (display_mode == "lightened") { // after path finding
     image(img, 0, 0, image_size_x, image_size_y);
   }
   grid();
@@ -296,9 +293,10 @@ void keyPressed() {
   }
   
   if (key == 'd') { display_mode = "drawing";   }
-  if (key == 'O') { display_mode = "original";  }
-  if (key == 'o') { display_mode = "reference";  }
+  if (key == 'o') { display_mode = "original";  }
+  if (key == 'i') { display_mode = "reference";  }
   if (key == 'l') { display_mode = "lightened"; }
+
   if (keyCode == 49 && ctrl_down && pen_count > 0) { display_mode = "pen";  pen_selected = 0; }  // ctrl 1
   if (keyCode == 50 && ctrl_down && pen_count > 1) { display_mode = "pen";  pen_selected = 1; }  // ctrl 2
   if (keyCode == 51 && ctrl_down && pen_count > 2) { display_mode = "pen";  pen_selected = 2; }  // ctrl 3
@@ -307,8 +305,7 @@ void keyPressed() {
   if (keyCode == 54 && ctrl_down && pen_count > 5) { display_mode = "pen";  pen_selected = 5; }  // ctrl 6
   if (keyCode == 55 && ctrl_down && pen_count > 6) { display_mode = "pen";  pen_selected = 6; }  // ctrl 7
   if (keyCode == 56 && ctrl_down && pen_count > 7) { display_mode = "pen";  pen_selected = 7; }  // ctrl 8
-  if (keyCode == 57 && ctrl_down && pen_count > 8) { display_mode = "pen";  pen_selected = 8; }  // ctrl 9
-  if (keyCode == 48 && ctrl_down && pen_count > 9) { display_mode = "pen";  pen_selected = 9; }  // ctrl 0
+
   if (key == 'G') { is_grid_on = ! is_grid_on; }
 
   if (key == '1' && pen_count > 0) { pen_distribution[0] *= 1.1; }
@@ -317,20 +314,22 @@ void keyPressed() {
   if (key == '4' && pen_count > 3) { pen_distribution[3] *= 1.1; }
   if (key == '5' && pen_count > 4) { pen_distribution[4] *= 1.1; }
   if (key == '6' && pen_count > 5) { pen_distribution[5] *= 1.1; }
+/*
+  if (key == '1' && pen_count > 0) { pen_distribution[0] *= 1.1; }
+  if (key == '2' && pen_count > 1) { pen_distribution[1] *= 1.1; }
+  if (key == '3' && pen_count > 2) { pen_distribution[2] *= 1.1; }
+  if (key == '4' && pen_count > 3) { pen_distribution[3] *= 1.1; }
+  if (key == '5' && pen_count > 4) { pen_distribution[4] *= 1.1; }
+  if (key == '6' && pen_count > 5) { pen_distribution[5] *= 1.1; }
+*/
 
   if (key == 't') { set_even_distribution(); }
   if (key == 'y') { set_black_distribution(); }
   //if (key == 'x') { mouse_point(); }  
-  if (key == ':' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
-  if (key == ';' && current_copic_set >= 1)                   { current_copic_set--; }
-  
-  if (key == 's') { 
-    outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
-    shouldSaveScreenshot = true;
-    redraw(); // Request a single redraw instead of restarting the loop
-  }
+  if (key == 'w' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
+  if (key == 'q' && current_copic_set >= 1)                   { current_copic_set--; }
 
-  if (key == '9') {
+  if (key == 'n') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
     if (pen_count > 1) { pen_distribution[1] *= 1.05; }
     if (pen_count > 2) { pen_distribution[2] *= 1.10; }
@@ -338,7 +337,7 @@ void keyPressed() {
     if (pen_count > 4) { pen_distribution[4] *= 1.20; }
     if (pen_count > 5) { pen_distribution[5] *= 1.25; }
   }
-  if (key == '0') {
+  if (key == 'm') {
     if (pen_count > 0) { pen_distribution[0] *= 1.00; }
     if (pen_count > 1) { pen_distribution[1] *= 0.95; }
     if (pen_count > 2) { pen_distribution[2] *= 0.90; }
@@ -346,13 +345,17 @@ void keyPressed() {
     if (pen_count > 4) { pen_distribution[4] *= 0.80; }
     if (pen_count > 5) { pen_distribution[5] *= 0.75; }
 }
-  if (key == 'g') { 
+
+  if (key == 's') { 
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
     if(makelangelo == true){
         create_gcode_file(display_line_count);
         create_gcode_files(display_line_count);
     }
+    outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
+    shouldSaveScreenshot = true;
+    redraw(); // Request a single redraw instead of restarting the loop
   }
 
   if (key == ',') {
@@ -368,7 +371,7 @@ void keyPressed() {
     //println("display_line_count: " + display_line_count);
   }
 
-  if (key == 'r') { 
+ /* if (key == 'r') { 
     screen_rotate ++;
     if (screen_rotate == 4) { screen_rotate = 0; }
     
@@ -386,7 +389,7 @@ void keyPressed() {
         mx -= img.height;
         break;
      }
-  }
+  }*/
   
   normalize_distribution();
   d1.distribute_pen_changes_according_to_percentages(display_line_count, pen_count);
@@ -482,7 +485,6 @@ interface pfm {
 void reduce_palette(){
   qimg = new QImage(img_reducecolor, 16);
 }
-
 
 void draw_reduced(){
   println("Drawing image");

@@ -77,7 +77,6 @@ class PFM_squares implements pfm {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   private void find_darkest_area() {
-    // Warning, Experimental:
     // Finds the darkest square area by down sampling the img into a much smaller area then finding
     // the darkest pixel within that.  It returns a random pixel within that darkest area.
 
