@@ -21,7 +21,7 @@ PGraphics pg;
 Class cl = null;
 pfm genpath;
 int current_pfm = 0;
-String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares","PFM_lines"}; 
+String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
 
 int     state = 1;
 int     pen_selected = 0;
@@ -97,7 +97,7 @@ boolean shouldSaveScreenshot = false;
 
 void settings(){
   size(canvas_size_x, canvas_size_y, P3D);
-  pixelDensity(1);
+  pixelDensity(2);
   smooth();
 }
 
@@ -186,6 +186,7 @@ void draw() {
   }
 }
 
+//surface.setTitle("Drawbot - SVG creator - lines PFM");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void fileSelected(File selection) {
   if (selection == null) {
@@ -289,6 +290,7 @@ void keyPressed() {
     if (current_pfm >= pfms.length) { current_pfm = 0; }
     //display_line_count = 0;
     loadInClass(pfms[current_pfm]); 
+    surface.setTitle("Drawbot - SVG creator - " + pfms[current_pfm] + " PFM");
     state = 2;
   }
   

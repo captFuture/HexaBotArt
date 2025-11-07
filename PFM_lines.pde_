@@ -7,13 +7,28 @@
 
 class PFM_lines implements pfm {
 
-
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   public void pre_processing() {
     image_crop();
     image_scale(int(image_size_x / pen_width));
+    image_sharpen(img);
+    //image_blurr(img);
+    //image_unsharpen(img, 5);
+    //image_unsharpen(img, 4);
     image_unsharpen(img, 3);
-    //image_border("b6.png", 0, 0);
+    //image_unsharpen(img, 2);
+    //image_unsharpen(img, 1);
+    //image_motion_blur(img);
+    //image_outline(img);
+    //image_edge_detect(img);
+    //image_sobel(img, 1.0, 0);
+    //image_posterize(6);
+    //image_erode();
+    //image_dilate();
+    //image_invert();
+    //image_blur(2);
+    //image_border("b1.png", 0, 0);
+    //image_border("b11.png", 0, 0);
     image_desaturate();
   }
 
