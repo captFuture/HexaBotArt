@@ -8,7 +8,7 @@ class PFM_squares implements pfm {
   final int    adjustbrightness = 10;        // How fast it moves from dark to light, over-draw
   final float  desired_brightness = 250;    // How long to process.  You can always stop early with "s" key
 
-  int          tests = 500;                  // Reasonable values:  13 for development, 720 for final
+  int          tests = 200;                  // Reasonable values:  13 for development, 720 for final
   int          line_length = int(random(3, 40));           // Reasonable values:  3 through 100
 
   int          squiggle_count;

@@ -2,8 +2,16 @@
 // Edit these values here instead of HexaBotArt.pde
 
 // Constants and Unit Conversion
-float MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
+//float MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
+float MM_TO_PX = 2;   
+//float MM_TO_PX = 1; 
 float image_scale = 1;      // Additional scaling factor for the image
+
+//SET THIS
+//int pen_count = 6;                //up to 6 pens
+//int pen_count = 1;                //up to 6 pens
+int pen_count = 6;                //up to 6 pens
+int current_copic_set = 15;
 
 // Paper Size (A2 format in mm)
 float paper_size_y = 594;   // A2 height in mm
@@ -27,9 +35,6 @@ int servospeed = 150;
 float paper_top_to_origin = 0;       //mm
 float pen_width = 1;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
-//SET THIS
-int pen_count = 6;                //up to 6 pens
-int current_copic_set = 15;
 
 char gcode_decimal_seperator = '.';    
 int gcode_decimals = 0;             // Number of digits right of the decimal point in the gcode files.
