@@ -2,8 +2,8 @@
 // Edit these values here instead of HexaBotArt.pde
 
 // Constants and Unit Conversion
-//float MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
-float MM_TO_PX = 2;   
+float MM_TO_PX = 2.835f;   // 1mm ≈ 2.835 pixels at 72 DPI (standard screen resolution)
+//float MM_TO_PX = 2;   
 //float MM_TO_PX = 1; 
 float image_scale = 1;      // Additional scaling factor for the image
 
@@ -13,17 +13,17 @@ float image_scale = 1;      // Additional scaling factor for the image
 int pen_count = 6;                //up to 6 pens
 int current_copic_set = 15;
 
-// Paper Size (A2 format in mm)
-float paper_size_y = 594;   // A2 height in mm
-float paper_size_x = 420;   // A2 width in mm
+// Paper Size (format in mm)
+float paper_size_x = 500;   // width in mm
+float paper_size_y = 700;   // height in mm
 
 // Image Size (paper size converted to pixels and scaled)
-float image_size_y = paper_size_y * MM_TO_PX * image_scale; 
 float image_size_x = paper_size_x * MM_TO_PX * image_scale;
+float image_size_y = paper_size_y * MM_TO_PX * image_scale; 
 
 // Canvas Size (display window size)
-int canvas_size_y = 768;  // Window height in px
-int canvas_size_x = 545;  // Window width in px
+int canvas_size_x = 500;  // Window width in px
+int canvas_size_y = 700;  // Window height in px
 
 int refscale = 1;                     //sample area
 
@@ -32,7 +32,7 @@ int penup = 75;
 int pendown = 20;
 int servospeed = 150;
 
-float paper_top_to_origin = 0;       //mm
+float paper_top_to_origin = 0;     //mm
 float pen_width = 1;               //mm, determines image_scale, reduce, if solid black areas are speckled with white holes.
 
 

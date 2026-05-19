@@ -2,3 +2,9 @@
 *.gcode
 *.svg
 *.png
+*.jpeg
+*.jpg
+
+# Claude Code
+CLAUDE.md
+.claude/

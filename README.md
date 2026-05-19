@@ -56,21 +56,17 @@ The code was intended to be heavily modified to generate different and unique dr
 
 Some Demodrawings done on a Makelangelo Robot http://www.makelangelo.com/
 
-![drawbot1](http://tarantl.com/drawbot1.jpg)
-![drawbot2](http://tarantl.com/drawbot2.jpg)
-![drawbot3](http://tarantl.com/drawbot3.jpg)
-
 There are some demo Images in the /pics folder and generated files are in the /svg folder.
-The file named "compplete_****.svg shows the complete drawing and in the subfolder there is a file for each color. I then load the svgs into the Makelangelo one by one, home the machine, insert the pen and start.
-
+The file named "compplete_****.svg shows the complete drawing and in the subfolder there is a file for each color. 
 
 I use a special gondola on my Makelangelo 5:
 https://www.thingiverse.com/thing:4929245
 
 
 +++ LATEST REVISION +++
-Makelangelo 5+ can now be flashed with an official Marlin Firmware
-The latest version of HexaBotArt generates GCODE files compatible with Marlin for Makelangelo
+Rebuild of a Makelangelo5 with an added Raspberry Pi and Klipper Firmware and Software.
+Polardrawing kinematics for klipper.
+The latest version of HexaBotArt generates GCODE files compatible with Klipper for Makelangelo
 
 Thanks to Dan from Marginally Clever https://github.com/MarginallyClever
 Check out his great Machines and let's join forces :D
