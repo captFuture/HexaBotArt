@@ -230,8 +230,8 @@ void setup_squiggles() {
   small_img_reference = createImage(img.width/refscale, img.height/refscale, RGB);
   small_img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width/refscale, img.height/refscale);
   
-  gcode_scale_x = image_size_x / img.width;
-  gcode_scale_y = image_size_y / img.height;
+  gcode_scale_x = paper_size_x / img.width;
+  gcode_scale_y = paper_size_y / img.height;
   gcode_scale = min(gcode_scale_x, gcode_scale_y);
   gcode_offset_x = - (paper_size_x / 2.0);  
   gcode_offset_y = - (paper_size_y / 2.0);
