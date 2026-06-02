@@ -1,8 +1,3 @@
-void draw_preview_image() {
-  image(img, 0, 0, width / 2, height / 2);
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void image_threshold() {
   code_comment("Thresholed");
@@ -43,31 +38,6 @@ void image_erode() {
 void image_dilate() {
   code_comment("image_dilate");
   img.filter(DILATE);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-void image_rotate() {
-  //image[y][x]                                     // assuming this is the original orientation
-  //image[x][original_width - y]                    // rotated 90 degrees ccw
-  //image[original_height - x][y]                   // 90 degrees cw
-  //image[original_height - y][original_width - x]  // 180 degrees
-
-  if (img.width > img.height) {
-    PImage img2 = createImage(img.height, img.width, RGB);
-    img.loadPixels();
-    for (int x = 1; x < img.width; x++) {
-      for (int y = 1; y < img.height; y++) {
-        int loc1= x + y * img.width;
-        int loc2= y + (img.width - x) * img2.width;
-        img2.pixels[loc2] = img.pixels[loc1];
-      }
-    }
-    img = img2;
-    updatePixels();
-    code_comment("image_rotate: rotated 90 degrees to fit machines sweet spot");
-  } else {
-    code_comment("image_rotate: no rotation necessary");
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -347,30 +317,6 @@ color convolution(int x, int y, float[][] matrix, int matrixsize, PImage img, fl
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-float[][] multiply_matrix(float[][] matrixA, float[][] matrixB) {
-  //Source:  https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm
-  //Test:    http://www.calcul.com/show/calculator/matrix-multiplication_;2;3;3;5
-
-  int n = matrixA.length;      // matrixA rows
-  int m = matrixA[0].length;   // matrixA columns
-  int p = matrixB[0].length;
-
-  float[][] matrixC;
-  matrixC = new float[n][p];
-
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < p; j++) {
-      for (int k = 0; k < m; k++) {
-        matrixC[i][j] = matrixC[i][j] + matrixA[i][k] * matrixB[k][j];
-      }
-    }
-  }
-
-  //print_matrix(matrix);
-  return matrixC;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 float[][] normalize_matrix(float[][] matrix) {
   //Source:  https://www.taylorpetrick.com/blog/post/convolution-part2
   //The resulting matrix is the same size as the original, but the output range will be constrained
@@ -424,19 +370,4 @@ float[][] scale_matrix(float[][] matrix, int scale) {
   return nmatrix;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-void print_matrix(float[][] matrix) {
-  int n = matrix.length;      // rows
-  int p = matrix[0].length;   // columns
-  float sum = 0;
-
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < p; j++) {
-      sum +=matrix[i][j];
-      System.out.printf("%10.5f ", matrix[i][j]);
-    }
-    println();
-  }
-  println("Sum: ", sum);
-}
 

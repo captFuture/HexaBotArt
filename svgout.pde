@@ -1,6 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void code_comment(String comment) {
-  code_comments += ("(" + comment + ")") + "\n";
   println(comment);
 }
 
@@ -29,9 +28,6 @@ void move_abs(int pen_number, float x, float y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void create_svg_file(int line_count) {
-  boolean drawing_polyline = false;
-  float svgdpi = 96.0 / 25.4;
-
   boolean is_pen_down;
   int pen_lifts;
   float pen_movement;

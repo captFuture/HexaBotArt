@@ -24,24 +24,6 @@ class PFM_original implements pfm {
     image_crop();
     image_scale(int(image_size_x / pen_width));
     image_sharpen(img);
-    //image_blurr(img);
-    //image_unsharpen(img, 5);
-    //image_unsharpen(img, 4);
-    //image_unsharpen(img, 3);
-    //image_unsharpen(img, 2);
-    //image_unsharpen(img, 1);
-    //image_motion_blur(img);
-    //image_outline(img);
-    //image_edge_detect(img);
-    //image_sobel(img, 1.0, 0);
-    //image_posterize(6);
-    //image_erode();
-    //image_dilate();
-    //image_invert();
-    //image_blur(2);
-    //image_border("b1.png", 0, 0);
-    //image_border("b11.png", 0, 0);
-    //image_desaturate();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,11 +39,9 @@ class PFM_original implements pfm {
     int x, y;
 
     find_darkest();
-    //find_darkest_area();
     x = darkest_x;
     y = darkest_y;
     squiggle_count++;
-    pen_color = 0;
 
     find_darkest_neighbor(x, y);
     move_abs(0, darkest_x, darkest_y);
@@ -91,34 +71,6 @@ class PFM_original implements pfm {
     }
     darkest_x = darkest_loc % img.width;
     darkest_y = (darkest_loc - darkest_x) / img.width;
-  }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  private void find_darkest_area() {
-    // Warning, Experimental:
-    // Finds the darkest square area by down sampling the img into a much smaller area then finding
-    // the darkest pixel within that.  It returns a random pixel within that darkest area.
-
-    int area_size = 10;
-    darkest_value = 999;
-    int darkest_loc = 1;
-
-    PImage img2;
-    img2= createImage(img.width / area_size, img.height / area_size, RGB);
-    img2.copy(img, 0, 0, img.width, img.height, 0, 0, img2.width, img2.height);
-
-    for (int loc = 0; loc < img2.width * img2.height; loc++) {
-      float r = brightness(img2.pixels[loc]);
-
-      if (r < darkest_value) {
-        darkest_value = r + random(1);
-        darkest_loc = loc;
-      }
-    }
-    darkest_x = darkest_loc % img2.width;
-    darkest_y = (darkest_loc - darkest_x) / img2.width;
-    darkest_x = darkest_x * area_size + int(random(area_size));
-    darkest_y = darkest_y * area_size + int(random(area_size));
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////

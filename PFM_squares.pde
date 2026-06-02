@@ -38,12 +38,10 @@ class PFM_squares implements pfm {
   private void find_squiggle() {
     int x, y;
 
-    //find_darkest();
     find_darkest_area();
     x = darkest_x;
     y = darkest_y;
     squiggle_count++;
-    pen_color = 0;
 
     find_darkest_neighbor(x, y);
     move_abs(0, darkest_x, darkest_y);
@@ -57,22 +55,6 @@ class PFM_squares implements pfm {
       y = darkest_y;
     }
     pen_up();
-  }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  private void find_darkest() {
-    darkest_value = 257;
-    int darkest_loc = 0;
-
-    for (int loc = 0; loc < img.width * img.height; loc++) {
-      float r = brightness(img.pixels[loc]);
-      if (r < darkest_value) {
-        darkest_value = r + random(1);
-        darkest_loc = loc;
-      }
-    }
-    darkest_x = darkest_loc % img.width;
-    darkest_y = (darkest_loc - darkest_x) / img.width;
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////

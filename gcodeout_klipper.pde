@@ -27,21 +27,13 @@ void gcode_trailer() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void gcode_comment(String comment) {
-    code_comments += (";(" + comment + ")") + "\n";
-    //println(comment);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 void create_gcode_files(int line_count) {
     boolean is_pen_down;
     int pen_lifts;
     float pen_movement;
     float pen_drawing;
-    int   lines_drawn;
-    float x;
-    float y;
-    float distance;
+    int lines_drawn;
+    float x, y, distance;
 
     float xmax = -Float.MAX_VALUE;
     float xmin =  Float.MAX_VALUE;
@@ -63,8 +55,6 @@ void create_gcode_files(int line_count) {
         OUTPUT = createWriter(sketchPath("") + gname);
 
         String buf = "";
-        //OUTPUT.println(buf);
-        //OUTPUT.println(code_comments);
         gcode_header();
 
         for (int i = 1; i < line_count; i++) {
@@ -146,19 +136,12 @@ void create_gcode_files(int line_count) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void create_gcode_file(int line_count) {
-    boolean drawing_polyline = false;
-    float svgdpi = 96.0 / 25.4;
-
     boolean is_pen_down;
     int pen_lifts;
     float pen_movement;
     float pen_drawing;
-    int   lines_drawn;
-    float x;
-    float y;
-    float distance;
-    int roundedX;
-    int roundedY;
+    int lines_drawn;
+    float x, y, distance;
 
     float xmax = -Float.MAX_VALUE;
     float xmin =  Float.MAX_VALUE;
@@ -177,8 +160,6 @@ void create_gcode_file(int line_count) {
     OUTPUT = createWriter(sketchPath("") + gname);
 
     String buf = "";
-    //OUTPUT.println(buf);
-    //OUTPUT.println(code_comments);
     gcode_header();
 
     d1.set_pen_continuation_flags();

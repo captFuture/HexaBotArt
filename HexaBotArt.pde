@@ -7,51 +7,35 @@
 // Open creative GPL source commons with some BSD public GNU foundation stuff sprinkled in...
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Map;
-
 ChildApplet child;
 PImage keyimg;
-QImage qimg;
 PFont f;
-PGraphics pg;
 
-// Configuration is now stored in `config.pde` in the sketch folder.
-// Edit `config.pde` to change paper size, scales, pen counts and related settings.
+// Configuration is in Config.pde — edit there to change paper size, pen count, etc.
 
-Class cl = null;
 pfm genpath;
 int current_pfm = 0;
-String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"}; 
+String[] pfms = {"PFM_original", "PFM_spiral", "PFM_squares"};
 
 int     state = 1;
 int     pen_selected = 0;
 
 int     display_line_count;
 String  display_mode = "drawing";
-PImage  img_orginal;               // The original image
-PImage  img_reference;             // After pre_processing, croped, scaled, border, etc.  This is what we will try to draw. 
-PImage  img;                       // Used during drawing for current brightness levels.  Gets damaged during drawing.
-PImage  img_reducecolor;
-PImage  small_img_reference;
+PImage  img_orginal;      // The original image
+PImage  img_reference;    // After pre_processing, cropped, scaled, border, etc.
+PImage  img;              // Current brightness levels during drawing; gets modified.
 float   gcode_offset_x;
 float   gcode_offset_y;
 float   gcode_scale;
 float   canvas_scale;
-float   canvas_scale_org;
-int     screen_rotate = 0;
 float   old_x = 0;
 float   old_y = 0;
-int     mx = 0;
-int     my = 0;
-int     morgx = 0;
-int     morgy = 0;
-int     pen_color = 0;
 boolean is_pen_down;
 boolean is_grid_on = false;
 String  path_selected = "";
 String  file_selected = "";
 String  basefile_selected = "";
-String  code_comments = "";
 int     startTime = 0;
 boolean ctrl_down = false;
 
@@ -105,8 +89,6 @@ void settings(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
   surface.setTitle("Drawbot - SVG creator");
-  //surface.setResizable(true);
-  //surface.setLocation(100, 100);
   f = createFont("arial.ttf", 12);
   textFont(f);
 
@@ -118,12 +100,9 @@ void setup() {
   dx = new Limit(); 
   dy = new Limit(); 
   copic = new Copix();
-  // allocate pen distribution using configured pen_count
   pen_distribution = new float[pen_count];
   loadInClass(pfms[current_pfm]);
   selectInput("Select an image to process:", "fileSelected");
-
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,8 +116,6 @@ void draw() {
 
   if (state != 3) { background(255, 255, 255); }
   scale(canvas_scale);
-  translate(mx, my);
-  rotate(HALF_PI*screen_rotate);
   
   switch(state) {
   case 1: 
@@ -148,11 +125,9 @@ void draw() {
     println("State=2, Setup squiggles");
     loop();
     setup_squiggles();
-    reduce_palette();
     startTime = millis();
     break;
-  case 3: 
-    //println("State=3, Drawing image");
+  case 3:
     if (display_line_count <= 1) {
       background(255);
     } 
@@ -175,9 +150,8 @@ void draw() {
     code_comment ("extreams of Y: " + dy.min + " thru " + dy.max);
     state++;
     break;
-  case 5: 
+  case 5:
     render_all();
-    draw_reduced();
     noLoop();
     break;
   default:
@@ -186,7 +160,6 @@ void draw() {
   }
 }
 
-//surface.setTitle("Drawbot - SVG creator - lines PFM");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void fileSelected(File selection) {
   if (selection == null) {
@@ -198,8 +171,6 @@ void fileSelected(File selection) {
     String[] fileparts = split(file_selected, '.');
     basefile_selected = fileparts[0];
     println("user selected: " + path_selected);
-    //println("user selected: " + file_selected);
-    //println("user selected: " + basefile_selected);
     state++;
   }
 }
@@ -212,23 +183,16 @@ void setup_squiggles() {
   float   canvas_scale_y;
 
   d1.line_count = 0;
-  img = loadImage(path_selected, "jpeg");  // Load the image into the program  
+  img = loadImage(path_selected, "jpeg");
   code_comment("loaded image: " + path_selected);
-  //image_rotate();
   img_orginal = createImage(img.width, img.height, RGB);
   img_orginal.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
 
-  img_reducecolor = createImage(img.width/refscale, img.height/refscale, RGB);
-  img_reducecolor.copy(img, 0, 0, img.width, img.height, 0, 0, img.width/refscale, img.height/refscale);
-
   genpath.pre_processing();
   img.loadPixels();
-  
+
   img_reference = createImage(img.width, img.height, RGB);
   img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
-  
-  small_img_reference = createImage(img.width/refscale, img.height/refscale, RGB);
-  small_img_reference.copy(img, 0, 0, img.width, img.height, 0, 0, img.width/refscale, img.height/refscale);
   
   gcode_scale_x = paper_size_x / img.width;
   gcode_scale_y = paper_size_y / img.height;
@@ -239,12 +203,9 @@ void setup_squiggles() {
   canvas_scale_x = width / (float)img.width;
   canvas_scale_y = height / (float)img.height;
   canvas_scale = min(canvas_scale_x, canvas_scale_y);
-  canvas_scale_org = canvas_scale;
   
   code_comment("final baseimage dimensions: " + img.width + " by " + img.height);
   code_comment("paper_size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2));
-  //code_comment("drawing size max: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2));
-  //code_comment("drawing size calculated " + nf(img.width * gcode_scale,0,2) + " by " + nf(img.height * gcode_scale,0,2));
   genpath.output_parameters();
 
   state++;
@@ -286,10 +247,9 @@ void keyPressed() {
   if (keyCode == CONTROL) { ctrl_down = true; }
 
   if (key == 'p') {
-    current_pfm ++;
+    current_pfm++;
     if (current_pfm >= pfms.length) { current_pfm = 0; }
-    //display_line_count = 0;
-    loadInClass(pfms[current_pfm]); 
+    loadInClass(pfms[current_pfm]);
     surface.setTitle("Drawbot - SVG creator - " + pfms[current_pfm] + " PFM");
     state = 2;
   }
@@ -316,18 +276,9 @@ void keyPressed() {
   if (key == '4' && pen_count > 3) { pen_distribution[3] *= 1.1; }
   if (key == '5' && pen_count > 4) { pen_distribution[4] *= 1.1; }
   if (key == '6' && pen_count > 5) { pen_distribution[5] *= 1.1; }
-/*
-  if (key == '1' && pen_count > 0) { pen_distribution[0] *= 1.1; }
-  if (key == '2' && pen_count > 1) { pen_distribution[1] *= 1.1; }
-  if (key == '3' && pen_count > 2) { pen_distribution[2] *= 1.1; }
-  if (key == '4' && pen_count > 3) { pen_distribution[3] *= 1.1; }
-  if (key == '5' && pen_count > 4) { pen_distribution[4] *= 1.1; }
-  if (key == '6' && pen_count > 5) { pen_distribution[5] *= 1.1; }
-*/
 
   if (key == 't') { set_even_distribution(); }
   if (key == 'y') { set_black_distribution(); }
-  //if (key == 'x') { mouse_point(); }  
   if (key == 'w' && current_copic_set < copic_sets.length -1) { current_copic_set++; }
   if (key == 'q' && current_copic_set >= 1)                   { current_copic_set--; }
 
@@ -346,7 +297,7 @@ void keyPressed() {
     if (pen_count > 3) { pen_distribution[3] *= 0.85; }
     if (pen_count > 4) { pen_distribution[4] *= 0.80; }
     if (pen_count > 5) { pen_distribution[5] *= 0.75; }
-}
+  }
 
   if (key == 's') { 
     create_svg_file(display_line_count);
@@ -357,63 +308,32 @@ void keyPressed() {
     }
     outfilename = "renderings\\" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".png";
     shouldSaveScreenshot = true;
-    redraw(); // Request a single redraw instead of restarting the loop
+    redraw();
   }
 
   if (key == ',') {
-    int delta = -10000;
-    display_line_count = int(display_line_count + delta);
-    display_line_count = constrain(display_line_count, 0, d1.line_count);
-    //println("display_line_count: " + display_line_count);
+    display_line_count = constrain(display_line_count - 10000, 0, d1.line_count);
   }
   if (key == '.') {
-    int delta = 10000;
-    display_line_count = int(display_line_count + delta);
-    display_line_count = constrain(display_line_count, 0, d1.line_count);
-    //println("display_line_count: " + display_line_count);
+    display_line_count = constrain(display_line_count + 10000, 0, d1.line_count);
   }
 
- /* if (key == 'r') { 
-    screen_rotate ++;
-    if (screen_rotate == 4) { screen_rotate = 0; }
-    
-    switch(screen_rotate) {
-      case 0: 
-        my -= img.height;
-        break;
-      case 1: 
-        mx += img.height;
-        break;
-      case 2: 
-        my += img.height;
-        break;
-      case 3: 
-        mx -= img.height;
-        break;
-     }
-  }*/
-  
   normalize_distribution();
   d1.distribute_pen_changes_according_to_percentages(display_line_count, pen_count);
-  //surface.setSize(img.width, img.height);
   redraw();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void set_even_distribution() {
-  println("set_even_distribution");
-  for (int p = 0; p<pen_count; p++) {
+  for (int p = 0; p < pen_count; p++) {
     pen_distribution[p] = display_line_count / pen_count;
-    //println("pen_distribution[" + p + "] = " + pen_distribution[p]);
   }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void set_black_distribution() {
-  println("set_black_distribution");
-  for (int p=0; p<pen_count; p++) {
+  for (int p = 0; p < pen_count; p++) {
     pen_distribution[p] = 0;
-    //println("pen_distribution[" + p + "] = " + pen_distribution[p]);
   }
   pen_distribution[0] = display_line_count;
 }
@@ -422,10 +342,7 @@ void set_black_distribution() {
 void normalize_distribution() {
   float total = 0;
 
-  println();
-  //println("normalize_distribution");
-
-  for (int p=0; p<pen_count; p++) {
+  for (int p = 0; p < pen_count; p++) {
     total = total + pen_distribution[p];
   }
   
@@ -446,137 +363,36 @@ void normalize_distribution() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 public void loadInClass(String pfm_name){
   String className = this.getClass().getName() + "$" + pfm_name;
+  Class cl = null;
   try {
     cl = Class.forName(className);
-  } catch (ClassNotFoundException e) { 
-    println("\nError unknown PFM: " + className); 
+  } catch (ClassNotFoundException e) {
+    println("\nError unknown PFM: " + className);
   }
-  
+
   genpath = null;
   if (cl != null) {
     try {
-      // Get the constructor(s)
       java.lang.reflect.Constructor[] ctors = cl.getDeclaredConstructors();
-      // Create an instance with the parent object as parameter (needed for inner classes)
       genpath = (pfm) ctors[0].newInstance(new Object[] { this });
     } catch (InstantiationException e) {
       println("Cannot create an instance of " + className);
     } catch (IllegalAccessException e) {
       println("Cannot access " + className + ": " + e.getMessage());
     } catch (Exception e) {
-       // Lot of stuff can go wrong...
-       e.printStackTrace();
+      e.printStackTrace();
     }
   }
-  println("\nloaded PFM: " + className); 
+  println("\nloaded PFM: " + className);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // This is the pfm interface, it contains the only methods the main code can call.
 // As well as any variables that all pfm modules must have.
 interface pfm {
-  //public int x=0;
   public void pre_processing();
   public void find_path();
   public void post_processing();
   public void output_parameters();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void reduce_palette(){
-  qimg = new QImage(img_reducecolor, 16);
-}
-
-void draw_reduced(){
-  println("Drawing image");
-  if(img.width > img.height){
-    println("Image rotated");
-  }
-  
-  int[] col = qimg.getColorTable();
-}
-
-/**
- This class is used to store the result of the image quantization.
- The final image comprises a color table and a 2D array containing 
- an index into the color table.
- It also creates a new PImage with the reduced color set for 
- convenience.
- */
-public class QImage {
-  final int[][] pixels;
-  final int w, h;
-  final int[] colortable;
-  final PImage reducedImage;
-
-  /**
-   img = the PImage we want to quantize
-   maxNbrColors - color table size
-   */
-  public QImage(PImage img, int maxNbrColors) {
-    // Pixel data needs to be in 2D array for Quantize class.
-    w = img.width;
-    h = img.height;
-    pixels = new int[h][w];
-    img.loadPixels();
-    int[] p = img.pixels;
-    int n = 0;
-    for (int y = 0; y < h; y++) {
-      for (int x = 0; x < w; x++) {
-        pixels[y][x] = p[n++];
-      }
-    } 
-    // Quantize the image
-    colortable = Quantize.quantizeImage(pixels, maxNbrColors);
-    //Create a PImage with the reduced color pallette
-    reducedImage = createImage(w, h, ARGB);
-    for (int y = 0; y < h; y++) {
-      for (int x = 0; x < w; x++) {
-        reducedImage.set(x, y, colortable[pixels[y][x]]);
-      }
-    }
-  }
-
-  /**
-   Convenience method to draw the quatized image at a 
-   given position.
-   */
-  public void displayRAW(int px, int py) {
-    for (int y = 0; y < h; y++) {
-      for (int x = 0; x < w; x++) {
-        set(px + x, py+y, colortable[pixels[y][x]]);
-      }
-    }
-  }
-
-  /**
-   Get the pixel color index data
-   */
-  public int[][] getPixels() {
-    return pixels;
-  }
-
-  /**
-   Get the color table data
-   */
-  public int[] getColorTable() {
-    return colortable;
-  }
-
-  /**
-   Get the maximum number of colors in the reduced image.
-   The actual number of unique colors maybe less than this.
-   */
-  public int nbrColors() {
-    return colortable.length;
-  }
-
-  /**
-   Convenience method to get the quatized image as a PImage
-   that can be used directly in processing
-   */
-  public PImage getImage() {
-    return reducedImage;
-  }
-}

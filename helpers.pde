@@ -25,26 +25,18 @@ class ChildApplet extends PApplet { // Key table window
     {"<ctrl> 4", "Display drawing, pen 3 only"},
     {"<ctrl> 5", "Display drawing, pen 4 only"},
     {"<ctrl> 6", "Display drawing, pen 5 only"},
-    {"S", "Stop path finding prematurely"},
     {"Esc", "Exit running program"},
     {"t", "Redistribute percentage of lines drawn by each pen evenly"},
     {"y", "Redistribute 100% of lines drawn to pen 0"},
     {"n", "Change distribution of lines drawn (lighten)"},
     {"m", "Change distribution of lines drawn (darken)"},
-    
+
     {"1", "Increase percentage of lines drawn by pen 1"},
     {"2", "Increase percentage of lines drawn by pen 2"},
     {"3", "Increase percentage of lines drawn by pen 3"},
     {"4", "Increase percentage of lines drawn by pen 4"},
     {"5", "Increase percentage of lines drawn by pen 5"},
-    {"6", "Increase percentage of lines drawn by pen 6"},
-
-    {"shift 1", "Decrease percentage of lines drawn by pen 1"},
-    {"shift 2", "Decrease percentage of lines drawn by pen 2"},
-    {"shift 3", "Decrease percentage of lines drawn by pen 3"},
-    {"shift 4", "Decrease percentage of lines drawn by pen 4"},
-    {"shift 5", "Decrease percentage of lines drawn by pen 5"},
-    {"shift 6", "Decrease percentage of lines drawn by pen 6"}
+    {"6", "Increase percentage of lines drawn by pen 6"}
   };
 
 
@@ -75,30 +67,22 @@ class ChildApplet extends PApplet { // Key table window
     textAlign(LEFT);
     textSize(12);
     fill(100);
-    float visibleRows = (height - headerHeight) / rowHeight;
-    
+
     for (int i = 0; i < bindings.length; i++) {
       float y = headerHeight + 30 + (i * rowHeight);
-      
-      // Only draw rows that are visible in the window
+
       if (y < height) {
-        // alternating row background: even = white, odd = light grey
         noStroke();
         if (i % 2 == 0) {
-          fill(255);          // white
+          fill(255);
         } else {
-          fill(230);          // light grey
+          fill(230);
         }
-        // draw full-width stripe behind the row (adjust vertical position to cover text)
         float rectY = y - rowHeight + 6;
         rect(0, rectY, width, rowHeight);
 
-        // draw the text on top
         fill(0);
         text(bindings[i][0], margin, y);
-        
-        // Wrap text for long descriptions
-        float wrapWidth = width - (margin + columnSpacing + margin);
         text(bindings[i][1], margin + columnSpacing, y);
       }
     }

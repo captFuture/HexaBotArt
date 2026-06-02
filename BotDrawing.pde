@@ -3,7 +3,6 @@
 class botDrawing {
   private int line_count = 0;
   botLine[] lines = new botLine[10000000];
-  String linecode_comment = "";
 
   botDrawing() {
   }
@@ -12,21 +11,9 @@ class botDrawing {
     lines[line_count].render_with_copic(g);
   }
 
-  void render_all() {
-    for (int i = 1; i < line_count; i++) {
-      lines[i].render_with_copic(g);
-    }
-  }
-
   void render_some(int line_count) {
     for (int i = 1; i < line_count; i++) {
       lines[i].render_with_copic(g);
-    }
-  }
-
-  void render_some(PGraphics pg, int line_count) {
-    for (int i = 1; i < line_count; i++) {
-      lines[i].render_with_copic(pg);
     }
   }
 
@@ -38,14 +25,6 @@ class botDrawing {
     }
   }
 
-  void render_one_pen(PGraphics pg, int line_count, int pen) {
-    for (int i = 1; i < line_count; i++) {
-      if (lines[i].pen_number == pen) {
-        lines[i].render_with_copic(pg);
-      }
-    }
-  }
-
   void set_pen_continuation_flags() {
     float prev_x = 123456.0;
     float prev_y = 654321.0;
@@ -53,15 +32,13 @@ class botDrawing {
     int prev_pen_number = 123456;
 
     for (int i = 1; i < line_count; i++) {
-
-      if (prev_x != lines[i].x1 || prev_y != lines[i].y1 || prev_pen_down != lines[i].pen_down  || prev_pen_number != lines[i].pen_number) {
+      if (prev_x != lines[i].x1 || prev_y != lines[i].y1 || prev_pen_down != lines[i].pen_down || prev_pen_number != lines[i].pen_number) {
         lines[i].pen_continuation = false;
       } else {
         lines[i].pen_continuation = true;
       }
-
-      prev_x= lines[i].x2;
-      prev_y= lines[i].y2;
+      prev_x = lines[i].x2;
+      prev_y = lines[i].y2;
       prev_pen_down = lines[i].pen_down;
       prev_pen_number = lines[i].pen_number;
     }
@@ -79,10 +56,9 @@ class botDrawing {
 
   public void evenly_distribute_pen_changes(int line_count, int total_pens) {
     println("evenly_distribute_pen_changes");
-    for (int i = 1; i <=  line_count; i++) {
+    for (int i = 1; i <= line_count; i++) {
       int cidx = (int)map(i - 1, 0, line_count, 1, total_pens);
       lines[i].pen_number = cidx;
-      //println (i + "   " + lines[i].pen_number);
     }
   }
 
@@ -90,18 +66,16 @@ class botDrawing {
     int p = 0;
     float p_total = 0;
 
-    for (int i = 1; i <=  line_count; i++) {
+    for (int i = 1; i <= line_count; i++) {
       if (i > pen_distribution[p] + p_total) {
         p_total = p_total + pen_distribution[p];
         p++;
       }
       if (p > total_pens - 1) {
-        // Hackyfix for off by one error
         println("ERROR: distribute_pen_changes_according_to_percentages, p:  ", p);
         p = total_pens - 1;
       }
       lines[i].pen_number = p;
-      //println (i + "   " + lines[i].pen_number);
     }
   }
 }
