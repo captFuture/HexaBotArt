@@ -1238,10 +1238,8 @@ class Copix {
     float closest_value = 99999999999999999999999999.0;
     String closest_pen = "";
 
-    for (Map.Entry me : original_color.entrySet()) {
-      //println(me.getKey() + " is " + me.getValue());
-
-      color c2 = (color)me.getValue();
+    for (String pen : original_color.keySet()) {
+      color c2 = original_color.get(pen);
       float r2 = red(c2);
       float g2 = green(c2);
       float b2 = blue(c2);
@@ -1249,7 +1247,7 @@ class Copix {
       float d = sq((r2 - r1) * 0.30) + sq((g2 - g1) * 0.59) + sq((b2 - b1) * 0.11);
       if (d < closest_value) {
         closest_value = d;
-        closest_pen = (String)me.getKey();
+        closest_pen = pen;
       }
     }
     return closest_pen;
@@ -1266,10 +1264,8 @@ class Copix {
     float closest_value = 99999999999999999999999999.0;
     String closest_pen = "";
 
-    for (Map.Entry me : sketch_color.entrySet()) {
-      //println(me.getKey() + " is " + me.getValue());
-
-      color c2 = (color)me.getValue();
+    for (String pen : sketch_color.keySet()) {
+      color c2 = sketch_color.get(pen);
       float r2 = red(c2);
       float g2 = green(c2);
       float b2 = blue(c2);
@@ -1278,7 +1274,7 @@ class Copix {
       //float d = sq((r2-r1)*0.30) + sq((g2-g1)*0.59) + sq((b2-b1)*0.11);
       if (d < closest_value) {
         closest_value = d;
-        closest_pen = (String)me.getKey();
+        closest_pen = pen;
       }
     }
     return closest_pen;

@@ -1,72 +1,87 @@
-# HexaDrawBotArt
+# HexaBotArt
 
-Heavily depending on https://github.com/Scott-Cooper/Drawbot_image_to_gcode_v2
-Changed output to svg and some other functions as well as keystoke map in gui.
+HexaBotArt is a Processing sketch that converts images into drawing paths for drawbots, polargraph machines, and marker-based plotters. It can export both SVG and Klipper-compatible GCODE output, and supports up to 6 Copic marker pens with swappable drawing styles.
 
-This code is used to generate svg files for drawbots, polargraphs or other vertical drawing machines. \
-It takes an original image, manipulates it and generates a drawing path that kinda sorta looks like the original image. \
-This code was specifically written to work with multiple Copic markers. \
-The code was intended to be heavily modified to generate different and unique drawing styles.
+## Features
 
-## Key Bindings:
+- Image-to-path conversion with multiple path-finding strategies
+- SVG export for combined and per-pen output
+- Klipper GCODE export for Makelangelo-style polar drawing
+- 6-pen Copic marker support with 25 predefined color sets
+- Runtime controls for pen distribution, zoom, view modes, and export
+- Configuration controlled from `Config.pde`
+
+## Requirements
+
+- Processing 3 or newer
+- No external libraries required
+
+## Running
+
+1. Open `HexaBotArt.pde` in the Processing IDE.
+2. Press **Run** (Ctrl+R).
+3. Use the keyboard controls to select a path-finding module, adjust pen distribution, and save output.
+
+## Controls
+
 | Key | Description |
-| ------------- |:-------------|
-| p | Load next "Path Finding Module" (PFM) |
-| r | Rotate drawing |
-| [ | Zoom in |
-| ] | Zoom out |
-| \ | Reset drawing zoom, offset and rotation |
-| O | Display original image (capital letter) |
-| o | Display image to be drawn after pre-processing (lower case letter) |
-| l | Display image after the path finding module has manipulated it |
-| d | Display drawing with all pens |
-| \<ctrl> 1 | Display drawing, pen 0 only |
-| \<ctrl> 2 | Display drawing, pen 1 only |
-| \<ctrl> 3 | Display drawing, pen 2 only |
-| \<ctrl> 4 | Display drawing, pen 3 only |
-| \<ctrl> 5 | Display drawing, pen 4 only |
-| \<ctrl> 6 | Display drawing, pen 5 only |
-| S | Stop path finding prematurely |
-| Esc | Exit running program |
-| , | Decrease the total number of lines drawn |
-| . | Increase the total number of lines drawn |
-| g | Generate all SVGs with lines as displayed |
-| s | Save PNG image of displayed window content |
-| G | Toggle grid |
-| t | Redistribute percentage of lines drawn by each pen evenly |
-| y | Redistribute 100% of lines drawn to pen 0 |
-| 9 | Change distribution of lines drawn (lighten) |
-| 0 | Change distribution of lines drawn (darken) |
-| 1 | Increase percentage of lines drawn by pen 0 |
-| 2 | Increase percentage of lines drawn by pen 1 |
-| 3 | Increase percentage of lines drawn by pen 2 |
-| 4 | Increase percentage of lines drawn by pen 3 |
-| 5 | Increase percentage of lines drawn by pen 4 |
-| 6 | Increase percentage of lines drawn by pen 5 |
-| shift 0 | Decrease percentage of lines drawn by pen 0 |
-| shift 1 | Decrease percentage of lines drawn by pen 1 |
-| shift 2 | Decrease percentage of lines drawn by pen 2 |
-| shift 3 | Decrease percentage of lines drawn by pen 3 |
-| shift 4 | Decrease percentage of lines drawn by pen 4 |
-| shift 5 | Decrease percentage of lines drawn by pen 5 |
+|---|---|
+| `p` | Cycle Path Finding Module (PFM) |
+| `r` | Rotate drawing |
+| `[` | Zoom in |
+| `]` | Zoom out |
+| `\` | Reset zoom / offset / rotation |
+| `O` | Show original image |
+| `o` | Show pre-processed image |
+| `l` | Show processed line image |
+| `d` | Show full rendered drawing |
+| `Ctrl+1`…`Ctrl+6` | Show individual pen layers |
+| `S` | Stop path finding early |
+| `Esc` | Exit sketch |
+| `,` / `.` | Decrease / increase total lines |
+| `g` | Generate SVG output |
+| `s` | Save PNG screenshot |
+| `G` | Toggle grid overlay |
+| `t` | Redistribute lines evenly across pens |
+| `y` | Send all lines to pen 0 |
+| `9` / `0` | Lighten / darken pen distribution |
+| `1`–`6` | Increase line weight for pen 1–6 |
+| `Shift+1`–`Shift+6` | Decrease line weight for pen 1–6 |
+| `:` / `;` | Cycle Copic marker sets |
 
-| : | Change Copic marker sets, increment |
-| ; | Change Copic marker sets, decrement |
+## Output
 
+- `svg/` — generated SVG files (combined and per pen)
+- `gcode/` — generated Klipper GCODE files when enabled
+- `renderings/` — saved PNG screenshots
 
-Some Demodrawings done on a Makelangelo Robot http://www.makelangelo.com/
+## Configuration
 
-There are some demo Images in the /pics folder and generated files are in the /svg folder.
-The file named "compplete_****.svg shows the complete drawing and in the subfolder there is a file for each color. 
+All settings live in `Config.pde`.
 
-I use a special gondola on my Makelangelo 5:
-https://www.thingiverse.com/thing:4929245
+Key settings:
 
+- `paper_size_x` / `paper_size_y` — paper dimensions in mm
+- `pen_count` — number of pens
+- `current_copic_set` — active Copic palette index
+- `MM_TO_PX` — scale conversion factor
+- `makelangelo` — enable GCODE export
+- `penup` / `pendown` — servo positions
 
-+++ LATEST REVISION +++
-Rebuild of a Makelangelo5 with an added Raspberry Pi and Klipper Firmware and Software.
-Polardrawing kinematics for klipper.
-The latest version of HexaBotArt generates GCODE files compatible with Klipper for Makelangelo
+## Project structure
 
-Thanks to Dan from Marginally Clever https://github.com/MarginallyClever
-Check out his great Machines and let's join forces :D
+- `HexaBotArt.pde` — main sketch and application flow
+- `BotDrawing.pde` — drawing buffer, rendering, and pen distribution
+- `BotLine.pde` — line segment data structure
+- `Bresenham.pde` — raster line and brightness sampling utilities
+- `Copic.pde` — Copic palette database and nearest-color matching
+- `Config.pde` — sketch configuration constants
+- `gcodeout_klipper.pde` — Klipper GCODE exporter
+- `gcodeout_marlin.pde_` — disabled Marlin GCODE exporter
+- `PFM_original.pde`, `PFM_spiral.pde`, `PFM_squares.pde` — path-finding modules
+- `svgout.pde` — SVG export routines
+- `helpers.pde` — helper UI and display utilities
+
+## Notes
+
+This project is inspired by `Drawbot_image_to_gcode_v2` and extended for multi-pen Copic workflows. Demo images are available in `pics/`, and sample outputs are stored in `svg/`.
