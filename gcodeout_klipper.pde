@@ -184,9 +184,15 @@ void create_gcode_file(int line_count) {
     d1.set_pen_continuation_flags();
 
     for (int p = pen_count - 1; p >= 0; p--) {
+        boolean penHasLines = false;
+        for (int i = 1; i < line_count; i++) {
+            if (d1.lines[i].pen_number == p && d1.lines[i].pen_down) { penHasLines = true; break; }
+        }
+        if (!penHasLines) continue;
+
         String penName = copic.get_original_name(copic_sets[current_copic_set][p]);
         OUTPUT.println(";(Code for Pen " + penName + ")");
-        OUTPUT.println("M118 Install pen: " + penName);
+        OUTPUT.println("M117 Install pen: " + penName);
         OUTPUT.println("CHANGE_PEN");
 
         for (int i = 1; i < line_count; i++) {

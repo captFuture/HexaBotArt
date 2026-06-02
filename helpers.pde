@@ -25,6 +25,8 @@ class ChildApplet extends PApplet { // Key table window
     {"<ctrl> 4", "Display drawing, pen 3 only"},
     {"<ctrl> 5", "Display drawing, pen 4 only"},
     {"<ctrl> 6", "Display drawing, pen 5 only"},
+    {"<ctrl> 7", "Display drawing, pen 6 only"},
+    {"<ctrl> 8", "Display drawing, pen 7 only"},
     {"S", "Stop path finding prematurely"},
     {"Esc", "Exit running program"},
     {"t", "Redistribute percentage of lines drawn by each pen evenly"},
