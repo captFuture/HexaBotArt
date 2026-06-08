@@ -91,7 +91,7 @@ void create_svg_file(int line_count) {
         } else {
           if (is_pen_down == true) {
             color c = copic.get_original_color(copic_sets[current_copic_set][p]);
-            OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:0.8;stroke-miterlimit:4;stroke-dasharray:none\"/>");
+            OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:"+svg_stroke_opacity+";stroke-miterlimit:4;stroke-dasharray:none\"/>");
             is_pen_down = false;
             pen_movement= pen_movement + distance;
             pen_lifts++;
@@ -111,7 +111,7 @@ void create_svg_file(int line_count) {
 
     if (is_pen_down == true) {
       color c = copic.get_original_color(copic_sets[current_copic_set][p]);
-      OUTPUT.println("\" style=\"fill:none;stroke:#" + hex(c, 6) + ";stroke-width:" + pen_width + ";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
+      OUTPUT.println("\" style=\"fill:none;stroke:#" + hex(c, 6) + ";stroke-width:" + pen_width + ";stroke-opacity:"+svg_stroke_opacity+";stroke-miterlimit:4;stroke-dasharray:none\"/>");
     }
   }
   OUTPUT.println("<path d=\"M 0,0 L " + paper_size_x + ",0 L " + paper_size_x + "," + paper_size_y + " L 0," + paper_size_y + " Z\" style=\"fill:none;stroke:#000000;stroke-width:0.1;stroke-opacity:1\"/>");
@@ -186,7 +186,7 @@ void create_svg_files (int line_count) {
         } else {
           if (is_pen_down == true) {
             color c = copic.get_original_color(copic_sets[current_copic_set][p]);
-            OUTPUT.println("\" style=\"fill:none;stroke:#" + hex(c, 6) + ";stroke-width:" + pen_width + ";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
+            OUTPUT.println("\" style=\"fill:none;stroke:#" + hex(c, 6) + ";stroke-width:" + pen_width + ";stroke-opacity:"+svg_stroke_opacity+";stroke-miterlimit:4;stroke-dasharray:none\"/>");
             is_pen_down = false;
             pen_movement = pen_movement + distance;
             pen_lifts++;
@@ -205,7 +205,7 @@ void create_svg_files (int line_count) {
 
     if (is_pen_down == true) {
       color c = copic.get_original_color(copic_sets[current_copic_set][p]);
-      OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
+      OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:"+svg_stroke_opacity+";stroke-miterlimit:4;stroke-dasharray:none\"/>");
     }
 
     OUTPUT.println("<path d=\"M 0,0 L " + paper_size_x + ",0 L " + paper_size_x + "," + paper_size_y + " L 0," + paper_size_y + " Z\" style=\"fill:none;stroke:#000000;stroke-width:0.1;stroke-opacity:1\"/>");
