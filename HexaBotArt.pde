@@ -299,7 +299,9 @@ void keyPressed() {
     if (pen_count > 5) { pen_distribution[5] *= 0.75; }
   }
 
-  if (key == 's') { 
+  if (key == 'S' && state == 3) { state = 4; }
+
+  if (key == 's') {
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
     if(makelangelo == true){
