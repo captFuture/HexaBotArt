@@ -31,3 +31,5 @@ float svg_stroke_width = 1;         // SVG stroke-width
 
 float svg_stroke_opacity = 1.0;     // SVG stroke-opacity (0.0–1.0)
 float grid_scale = 10;              // Grid spacing: 10 = cm, 25.4 = inches
+boolean gcodeout = true;       // Enable Klipper GCODE output
+
