@@ -302,7 +302,7 @@ void keyPressed() {
   if (key == 's') { 
     create_svg_file(display_line_count);
     create_svg_files(display_line_count);
-    if(makelangelo == true){
+    if(gcodeout == true){
         create_gcode_file(display_line_count);
         create_gcode_files(display_line_count);
     }

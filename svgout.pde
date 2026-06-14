@@ -50,7 +50,7 @@ void create_svg_file(int line_count) {
   String gname = "svg\\complete_" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".svg";
   OUTPUT = createWriter(sketchPath("") + gname);
 
-  String buf = "<svg width=\"" + paper_size_x + "mm\" height=\"" + paper_size_y + "mm\" xmlns=\"http://www.w3.org/2000/svg\">";
+  String buf = "<svg width=\"" + paper_size_x + "\" height=\"" + paper_size_y + "\" xmlns=\"http://www.w3.org/2000/svg\">";
   OUTPUT.println(buf);
 
   d1.set_pen_continuation_flags();
@@ -208,7 +208,7 @@ void create_svg_files (int line_count) {
       OUTPUT.println("\" style=\"fill:none;stroke:#"+hex(c, 6)+";stroke-width:"+pen_width+";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none\"/>");
     }
 
-    OUTPUT.println("<path d=\"M 0,0 L " + paper_size_x + ",0 L " + paper_size_x + "," + paper_size_y + " L 0," + paper_size_y + " Z\" style=\"fill:none;stroke:#000000;stroke-width:0.1;stroke-opacity:1\"/>");
+    OUTPUT.println("<path d=\"M 0,0 L " + paper_size_x + ",0 L " + paper_size_x + "," + paper_size_y + " L 0," + paper_size_y + " Z\" style=\"fill:none;stroke:#ffffff;stroke-width:0.1;stroke-opacity:1\"/>");
     OUTPUT.println("</svg>");
     OUTPUT.flush();
     OUTPUT.close();

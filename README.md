@@ -65,7 +65,7 @@ Key settings:
 - `pen_count` — number of pens
 - `current_copic_set` — active Copic palette index
 - `MM_TO_PX` — scale conversion factor
-- `makelangelo` — enable GCODE export
+- `gcodeout` — enable GCODE export
 - `penup` / `pendown` — servo positions
 
 ## Project structure

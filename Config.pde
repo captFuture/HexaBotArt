@@ -20,6 +20,6 @@ int canvas_size_x = 500;
 int canvas_size_y = 700;
 
 int refscale = 1;              // Sample area scale factor
-boolean makelangelo = true;    // Enable Klipper GCODE output
+boolean gcodeout = true;       // Enable Klipper GCODE output
 float pen_width = 1;           // mm; reduce if solid areas show white gaps
 float grid_scale = 10;         // Grid spacing: 10 = cm, 25.4 = inches
