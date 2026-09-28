@@ -50,7 +50,7 @@ void create_svg_file(int line_count) {
   String gname = "svg\\complete_" + pfms[current_pfm] + "_" + current_copic_set + "_" + basefile_selected + ".svg";
   OUTPUT = createWriter(sketchPath("") + gname);
 
-  String buf = "<svg width=\"" + paper_size_x + "\" height=\"" + paper_size_y + "\" xmlns=\"http://www.w3.org/2000/svg\">";
+  String buf = "<svg width=\"" + paper_size_x + "mm\" height=\"" + paper_size_y + "mm\" viewBox=\"0 0 " + paper_size_x + " " + paper_size_y + "\" xmlns=\"http://www.w3.org/2000/svg\">";
   OUTPUT.println(buf);
 
   d1.set_pen_continuation_flags();
@@ -83,7 +83,7 @@ void create_svg_file(int line_count) {
 
         if (d1.lines[i].pen_down) {
           if (is_pen_down == false) {
-            OUTPUT.print("<path d=\"M "+int(x)+","+int(y)+" L ");
+            OUTPUT.print("<path d=\"M "+round(x)+","+round(y)+" L ");
             is_pen_down = true;
           }
           pen_drawing = pen_drawing + distance;
@@ -150,7 +150,7 @@ void create_svg_files (int line_count) {
     String penName = copic.get_original_name(copic_sets[current_copic_set][p]);
     OUTPUT.println("<!-- Pen " + copic_sets[current_copic_set][p] + " "+ penName +" -->");
 
-    String buf = "<svg width=\"" + paper_size_x + "mm\" height=\"" + paper_size_y + "mm\" xmlns=\"http://www.w3.org/2000/svg\">";
+    String buf = "<svg width=\"" + paper_size_x + "mm\" height=\"" + paper_size_y + "mm\" viewBox=\"0 0 " + paper_size_x + " " + paper_size_y + "\" xmlns=\"http://www.w3.org/2000/svg\">";
     OUTPUT.println(buf);
 
     for (int i=1; i<line_count; i++) {
@@ -178,7 +178,7 @@ void create_svg_files (int line_count) {
 
         if (d1.lines[i].pen_down) {
           if (is_pen_down == false) {
-            OUTPUT.print("<path d=\"M " + round(x) + "," + round(y) + " L ");
+            OUTPUT.print("<path d=\" M " + round(x) + "," + round(y) + " L ");
             is_pen_down = true;
           }
           pen_drawing = pen_drawing + distance;
@@ -193,7 +193,7 @@ void create_svg_files (int line_count) {
           }
         }
         if (is_pen_down == true) {
-          buf = gcode_scaled_x2 + "," + gcode_scaled_y2 + " ";
+          buf =  round(gcode_scaled_x2) + "," + round(gcode_scaled_y2) + " ";
           OUTPUT.print(buf);
         }
         x = gcode_scaled_x2;

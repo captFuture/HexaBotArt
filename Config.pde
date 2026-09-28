@@ -8,8 +8,8 @@ int pen_count = 6;          // Number of pens (up to 6)
 int current_copic_set = 15; // Active Copic color palette (0–24)
 
 // Paper size in mm
-float paper_size_x = 500;
-float paper_size_y = 700;
+float paper_size_x = 500; //this is mm
+float paper_size_y = 700; //this is mm
 
 // Image size in pixels
 //float image_size_x = paper_size_x * MM_TO_PX * image_scale;
@@ -19,16 +19,15 @@ float paper_size_y = 700;
 float image_size_x = paper_size_x * image_scale;
 float image_size_y = paper_size_y * image_scale;
 
-
 // Display window size in pixels
 int canvas_size_x = 500;
 int canvas_size_y = 700;
 
 int refscale = 1;                   // Sample area scale factor
-float pen_width = 0.2;                // mm;
-float svg_stroke_width = 1;         // SVG stroke-width
+float img_scale = 2;                // mm; Change this to scale the image up or down (1 = 100%)
+float pen_width = 0.2;              // mm;
+float svg_stroke_width = 0.2;       // SVG stroke-width
 
-float svg_stroke_opacity = 1.0;     // SVG stroke-opacity (0.0–1.0)
+float svg_stroke_opacity = 0.6;     // SVG stroke-opacity (0.0–1.0)
 float grid_scale = 10;              // Grid spacing: 10 = cm, 25.4 = inches
-boolean gcodeout = true;       // Enable Klipper GCODE output
-
+boolean gcodeout = true;            // Enable Klipper GCODE output

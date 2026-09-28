@@ -11,8 +11,10 @@ void gcode_header() {
 
     OUTPUT.println(";(Draw border)");
     OUTPUT.println("PEN_UP");
-    OUTPUT.println("G0 X"+int(-paper_size_x/2)+" Y"+int(-paper_size_y/2)+" F3000.0");
+    OUTPUT.println("SET_G0_FEEDRATE");
+    OUTPUT.println("G0 X"+int(-paper_size_x/2)+" Y"+int(-paper_size_y/2));
     OUTPUT.println("PEN_DOWN");
+    OUTPUT.println("SET_G1_FEEDRATE");
     OUTPUT.println("G1 X"+int( paper_size_x/2)+" Y"+int(-paper_size_y/2));
     OUTPUT.println("G1 X"+int( paper_size_x/2)+" Y"+int( paper_size_y/2));
     OUTPUT.println("G1 X"+int(-paper_size_x/2)+" Y"+int( paper_size_y/2));
@@ -89,22 +91,22 @@ void create_gcode_files(int line_count) {
                     y = gcode_scaled_y1;
                     pen_movement = pen_movement + distance;
                     pen_lifts++;
-                    OUTPUT.println(";(Penup)");
+
                     OUTPUT.println("PEN_UP");
                 }
 
                 if (d1.lines[i].pen_down) {
                     if (is_pen_down == false) {
-                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y) + " F3000.0");
-                        OUTPUT.println(";(Pendown)");
+                        OUTPUT.println("SET_G0_FEEDRATE");
+                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y));
                         OUTPUT.println("PEN_DOWN");
+                        OUTPUT.println("SET_G1_FEEDRATE");
                         is_pen_down = true;
                     }
                     pen_drawing = pen_drawing + distance;
                     lines_drawn++;
                 } else {
                     if (is_pen_down == true) {
-                        OUTPUT.println(";(Penup)");
                         OUTPUT.println("PEN_UP");
                         is_pen_down = false;
                         pen_movement = pen_movement + distance;
@@ -112,7 +114,7 @@ void create_gcode_files(int line_count) {
                     }
                 }
                 if (is_pen_down == true) {
-                    buf = "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
+                    buf = "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2);
                     OUTPUT.println(buf);
                 }
                 x = gcode_scaled_x2;
@@ -172,8 +174,10 @@ void create_gcode_file(int line_count) {
         if (!penHasLines) continue;
 
         String penName = copic.get_original_name(copic_sets[current_copic_set][p]);
+        
         OUTPUT.println(";(Code for Pen " + penName + ")");
         OUTPUT.println("M117 Install pen: " + penName);
+        OUTPUT.println("T"+p);
         OUTPUT.println("CHANGE_PEN");
 
         for (int i = 1; i < line_count; i++) {
@@ -208,30 +212,31 @@ void create_gcode_file(int line_count) {
                     y = gcode_scaled_y1;
                     pen_movement = pen_movement + distance;
                     pen_lifts++;
-                    OUTPUT.println(";(Penup)");
                     OUTPUT.println("PEN_UP");
+                    OUTPUT.println("SET_G0_FEEDRATE");
                 }
 
                 if (d1.lines[i].pen_down) {
                     if (is_pen_down == false) {
-                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y) + " F3000.0");
-                        OUTPUT.println(";(Pendown)");
+                        OUTPUT.println("SET_G0_FEEDRATE");
+                        OUTPUT.println("G0 X" + int(x) + " Y" + int(y));
                         OUTPUT.println("PEN_DOWN");
+                        OUTPUT.println("SET_G1_FEEDRATE");
                         is_pen_down = true;
                     }
                     pen_drawing = pen_drawing + distance;
                     lines_drawn++;
                 } else {
                     if (is_pen_down == true) {
-                        OUTPUT.println(";(Penup)");
                         OUTPUT.println("PEN_UP");
+                        OUTPUT.println("SET_G0_FEEDRATE");
                         is_pen_down = false;
                         pen_movement = pen_movement + distance;
                         pen_lifts++;
                     }
                 }
-                if (is_pen_down == true) {
-                    buf = "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2) + " ";
+                if (is_pen_down == true) { 
+                    buf = "G1 X" + int(gcode_scaled_x2) + " Y" + int(gcode_scaled_y2);
                     OUTPUT.println(buf);
                 }
                 x = gcode_scaled_x2;
